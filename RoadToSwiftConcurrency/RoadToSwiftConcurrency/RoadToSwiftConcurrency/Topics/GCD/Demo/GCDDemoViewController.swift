@@ -1,0 +1,104 @@
+//
+//  GCDDemoViewController.swift
+//  RoadToSwiftConcurrency
+//
+//  Задание / Task: загрузка данных в фоне, обновление UI на main queue.
+//  Load data in background, update UI on main queue.
+//  Теория / Theory — см. THEORY.md в папке GCD.
+//
+
+import UIKit
+
+final class GCDDemoViewController: UIViewController {
+
+    // MARK: - UI
+
+    private let loadButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Load", for: .normal)
+        button.accessibilityIdentifier = "gcd.load"
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+
+    private let resultLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Tap Load"
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.accessibilityIdentifier = "gcd.result"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    // MARK: - Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "GCD Demo"
+        view.backgroundColor = .systemBackground
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(dismissTapped)
+        )
+        setupUI()
+        setupActions()
+    }
+
+    @objc private func dismissTapped() {
+        dismiss(animated: true)
+    }
+
+    // MARK: - Setup
+
+    private func setupUI() {
+        view.addSubview(loadButton)
+        view.addSubview(activityIndicator)
+        view.addSubview(resultLabel)
+
+        NSLayoutConstraint.activate([
+            loadButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.topAnchor.constraint(equalTo: loadButton.bottomAnchor, constant: 24),
+
+            resultLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            resultLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            resultLabel.topAnchor.constraint(equalTo: activityIndicator.bottomAnchor, constant: 24)
+        ])
+    }
+
+    private func setupActions() {
+        loadButton.addTarget(self, action: #selector(loadButtonTapped), for: .touchUpInside)
+    }
+
+    // MARK: - Actions
+
+    @objc private func loadButtonTapped() {
+        // Задание / Task: реализуй паттерн «фоновая работа → обновление UI на main»
+        // Implement pattern: background work → UI update on main
+        //
+        // 1. Показать activityIndicator (мы уже на main) / Show activityIndicator (we're on main)
+        // 2. Запустить симуляцию загрузки в фоне / Start load in background: DispatchQueue.global(qos: .userInitiated).async
+        // 3. В фоне: вызвать simulateLoad(), получить результат / In background: call simulateLoad(), get result
+        // 4. Вернуться на main queue (DispatchQueue.main.async) и обновить UI / Return to main and update UI:
+        //    скрыть индикатор, показать результат в resultLabel / hide indicator, show result in resultLabel
+        //
+        // Подсказки / Hints: [weak self], guard view.window != nil при обновлении UI, отключи кнопку на время загрузки.
+    }
+
+    /// Симулирует загрузку данных (2 секунды). Вызывать только из фонового потока.
+    /// Simulates data load (2 sec). Call only from background thread.
+    private func simulateLoad() -> String {
+        LoadSimulators.gcdSimulateLoad(delay: 2)
+    }
+}
