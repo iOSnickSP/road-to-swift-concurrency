@@ -134,7 +134,49 @@ final class DispatchSemaphoreDemoViewController: UIViewController {
         resultLabel.text = ""
         resourceRows.forEach { $0.setState(.waiting) }
 
-        // TASK: Semaphore(maxConcurrent) + Group, 5 tasks, wait/signal in defer, row states + progress on main, notify → result
+        var results: [String] = []
+        let semaphore = DispatchSemaphore(value: maxConcurrent)
+        let group = DispatchGroup()
+
+        for i in 0..<totalTasks {
+            group.enter()
+            DispatchQueue.global(qos: .utility).async { [weak self] in
+                defer {
+                    semaphore.signal()
+                    group.leave()
+                }
+                guard let self else { return }
+                semaphore.wait()
+
+                DispatchQueue.main.async { [weak self] in
+                    self?.resourceRows[i].setState(.loading)
+                    self?.updateActiveCount()
+                }
+
+                let result = self.loadResource(id: i)
+
+                DispatchQueue.main.async { [weak self] in
+                    guard let self, self.view.window != nil else { return }
+                    self.resourceRows[i].setState(.done(result))
+                    results.append(result)
+                    self.progressView.setProgress(CGFloat(results.count) / CGFloat(self.totalTasks), animated: true)
+                    self.resultLabel.text = results.joined(separator: ", ")
+                    self.updateActiveCount()
+                }
+            }
+        }
+
+        group.notify(queue: .main) { [weak self] in
+            guard let self, self.view.window != nil else { return }
+            self.loadButton.isEnabled = true
+            self.statusLabel.text = "Done"
+            self.activeLabel.text = ""
+        }
+    }
+
+    private func updateActiveCount() {
+        let loading = resourceRows.filter { if case .loading = $0.state { return true }; return false }.count
+        activeLabel.text = "Active: \(loading)/\(maxConcurrent)"
     }
 
     /// Симулирует загрузку ресурса. Вызывать только из фонового потока.
