@@ -37,6 +37,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 | GCD | `solution/gcd` |
 | DispatchGroup | `solution/dispatch-group` |
 | DispatchSemaphore | `solution/dispatch-semaphore` |
+| DispatchWorkItem | `solution/dispatch-work-item` |
 
 **Как использовать:** реши задачу сам → застрял или хочешь сверить подход → переключись на ветку решения.
 
@@ -49,6 +50,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **GCD** — очереди, async/sync, паттерн «фон → main» / queues, async/sync, background → main pattern
 - **DispatchGroup** — ожидание завершения нескольких задач / waiting for multiple tasks to complete
 - **DispatchSemaphore** — ограничение параллелизма / limiting concurrency (5 задач, max 2 одновременно)
+- **DispatchWorkItem** — отмена задач / task cancellation (3 ресурса последовательно, Cancel)
 
 ---
 

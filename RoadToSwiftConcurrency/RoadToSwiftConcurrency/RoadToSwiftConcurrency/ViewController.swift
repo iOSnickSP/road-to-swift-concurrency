@@ -33,6 +33,14 @@ class ViewController: UIViewController {
         return button
     }()
 
+    private let dispatchWorkItemButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("DispatchWorkItem Demo", for: .normal)
+        button.accessibilityIdentifier = "topics.dispatchWorkItemDemo"
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Topics"
@@ -44,15 +52,19 @@ class ViewController: UIViewController {
         view.addSubview(gcdDemoButton)
         view.addSubview(dispatchGroupButton)
         view.addSubview(dispatchSemaphoreButton)
+        view.addSubview(dispatchWorkItemButton)
         NSLayoutConstraint.activate([
             gcdDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50),
+            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70),
 
             dispatchGroupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             dispatchGroupButton.topAnchor.constraint(equalTo: gcdDemoButton.bottomAnchor, constant: 16),
 
             dispatchSemaphoreButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dispatchSemaphoreButton.topAnchor.constraint(equalTo: dispatchGroupButton.bottomAnchor, constant: 16)
+            dispatchSemaphoreButton.topAnchor.constraint(equalTo: dispatchGroupButton.bottomAnchor, constant: 16),
+
+            dispatchWorkItemButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            dispatchWorkItemButton.topAnchor.constraint(equalTo: dispatchSemaphoreButton.bottomAnchor, constant: 16)
         ])
     }
 
@@ -60,6 +72,13 @@ class ViewController: UIViewController {
         gcdDemoButton.addTarget(self, action: #selector(openGCDDemo), for: .touchUpInside)
         dispatchGroupButton.addTarget(self, action: #selector(openDispatchGroupDemo), for: .touchUpInside)
         dispatchSemaphoreButton.addTarget(self, action: #selector(openDispatchSemaphoreDemo), for: .touchUpInside)
+        dispatchWorkItemButton.addTarget(self, action: #selector(openDispatchWorkItemDemo), for: .touchUpInside)
+    }
+
+    @objc private func openDispatchWorkItemDemo() {
+        let demo = DispatchWorkItemDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
     }
 
     @objc private func openDispatchSemaphoreDemo() {
