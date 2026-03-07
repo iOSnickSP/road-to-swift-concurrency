@@ -35,6 +35,7 @@
 			membershipExceptions = (
 				Info.plist,
 				Topics/DispatchGroup/THEORY.md,
+				Topics/DispatchSemaphore/THEORY.md,
 				Topics/GCD/THEORY.md,
 			);
 			target = 0162FF152F5C705F00955193 /* RoadToSwiftConcurrency */;

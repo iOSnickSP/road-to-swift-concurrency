@@ -98,14 +98,7 @@ final class DispatchGroupDemoViewController: UIViewController {
         statusLabel.text = "Loading..."
         resultLabel.text = ""
 
-        // TODO: 1. Создать DispatchGroup / Create DispatchGroup
-        // TODO: 2. Запустить 3 параллельные задачи / Start 3 parallel tasks on DispatchQueue.global(qos: .userInitiated)
-        //       Для каждой: group.enter() в начале, defer { group.leave() } в блоке
-        //       Внутри: вызвать loadResource(id:), получить результат
-        //       После каждой завершённой задачи: на main queue обновить progressView и statusLabel
-        //       (progress = completedCount / totalTasks, status = "Loaded X of 3")
-        // TODO: 3. group.notify(queue: .main) { ... } — когда все готовы / when all complete:
-        //       обновить resultLabel, включить кнопку, statusLabel = "Done"
+        // TODO: DispatchGroup + 3 parallel tasks (enter/leave, defer), progress on main, notify → result
     }
 
     /// Симулирует загрузку ресурса. Вызывать только из фонового потока.

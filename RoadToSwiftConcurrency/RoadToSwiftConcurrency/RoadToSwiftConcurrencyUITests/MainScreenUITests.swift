@@ -20,6 +20,7 @@ final class MainScreenUITests: XCTestCase {
 
         XCTAssertTrue(app.buttons["topics.gcdDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.dispatchGroupDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.dispatchSemaphoreDemo"].waitForExistence(timeout: 2))
     }
 
     @MainActor
@@ -40,5 +41,15 @@ final class MainScreenUITests: XCTestCase {
         app.buttons["topics.dispatchGroupDemo"].tap()
         XCTAssertTrue(app.buttons["dispatchGroup.loadAll"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.staticTexts["dispatchGroup.status"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToDispatchSemaphoreDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.dispatchSemaphoreDemo"].tap()
+        XCTAssertTrue(app.buttons["dispatchSemaphore.loadAll"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["dispatchSemaphore.status"].waitForExistence(timeout: 2))
     }
 }

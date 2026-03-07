@@ -84,16 +84,7 @@ final class GCDDemoViewController: UIViewController {
     // MARK: - Actions
 
     @objc private func loadButtonTapped() {
-        // Задание / Task: реализуй паттерн «фоновая работа → обновление UI на main»
-        // Implement pattern: background work → UI update on main
-        //
-        // 1. Показать activityIndicator (мы уже на main) / Show activityIndicator (we're on main)
-        // 2. Запустить симуляцию загрузки в фоне / Start load in background: DispatchQueue.global(qos: .userInitiated).async
-        // 3. В фоне: вызвать simulateLoad(), получить результат / In background: call simulateLoad(), get result
-        // 4. Вернуться на main queue (DispatchQueue.main.async) и обновить UI / Return to main and update UI:
-        //    скрыть индикатор, показать результат в resultLabel / hide indicator, show result in resultLabel
-        //
-        // Подсказки / Hints: [weak self], guard view.window != nil при обновлении UI, отключи кнопку на время загрузки.
+        // TODO: global.async → simulateLoad() → main.async → update UI
     }
 
     /// Симулирует загрузку данных (2 секунды). Вызывать только из фонового потока.

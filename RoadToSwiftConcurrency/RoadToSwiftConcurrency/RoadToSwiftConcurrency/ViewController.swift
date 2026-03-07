@@ -25,6 +25,14 @@ class ViewController: UIViewController {
         return button
     }()
 
+    private let dispatchSemaphoreButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("DispatchSemaphore Demo", for: .normal)
+        button.accessibilityIdentifier = "topics.dispatchSemaphoreDemo"
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Topics"
@@ -35,18 +43,29 @@ class ViewController: UIViewController {
     private func setupUI() {
         view.addSubview(gcdDemoButton)
         view.addSubview(dispatchGroupButton)
+        view.addSubview(dispatchSemaphoreButton)
         NSLayoutConstraint.activate([
             gcdDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -30),
+            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50),
 
             dispatchGroupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dispatchGroupButton.topAnchor.constraint(equalTo: gcdDemoButton.bottomAnchor, constant: 16)
+            dispatchGroupButton.topAnchor.constraint(equalTo: gcdDemoButton.bottomAnchor, constant: 16),
+
+            dispatchSemaphoreButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            dispatchSemaphoreButton.topAnchor.constraint(equalTo: dispatchGroupButton.bottomAnchor, constant: 16)
         ])
     }
 
     private func setupActions() {
         gcdDemoButton.addTarget(self, action: #selector(openGCDDemo), for: .touchUpInside)
         dispatchGroupButton.addTarget(self, action: #selector(openDispatchGroupDemo), for: .touchUpInside)
+        dispatchSemaphoreButton.addTarget(self, action: #selector(openDispatchSemaphoreDemo), for: .touchUpInside)
+    }
+
+    @objc private func openDispatchSemaphoreDemo() {
+        let demo = DispatchSemaphoreDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
     }
 
     @objc private func openDispatchGroupDemo() {
