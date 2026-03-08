@@ -96,10 +96,25 @@ final class DispatchBarrierDemoViewController: UIViewController {
 
     @objc private func incrementTapped() {
         statusLabel.text = "Incrementing..."
-        // TASK: queue.async(flags: .barrier) { _count += 1 }, main.async status = "Incremented"
+        // Запись — только через barrier: ждёт завершения всех читателей, блокирует новых
+        // Write — barrier only: waits for all readers, blocks new ones
+        queue.async(flags: .barrier) { [weak self] in
+            guard let self else { return }
+            self._count += 1
+            DispatchQueue.main.async { [weak self] in
+                guard let self, self.view.window != nil else { return }
+                self.statusLabel.text = "Incremented"
+            }
+        }
     }
 
     @objc private func readTapped() {
-        // TASK: queue.sync { count }, main.async valueLabel.text = "\(count)"
+        // Чтение — sync, параллельно другим читателям. Берём count внутри sync, передаём в main
+        // Read — sync, concurrent with other readers. Capture count inside sync, pass to main
+        let count = queue.sync { _count }
+        DispatchQueue.main.async { [weak self] in
+            guard let self, self.view.window != nil else { return }
+            self.valueLabel.text = "\(count)"
+        }
     }
 }
