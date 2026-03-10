@@ -8,7 +8,12 @@
 
 import UIKit
 
+/// UIViewController изолирован на MainActor — все UI-операции гарантированно на main thread.
+/// @MainActor isolates the controller on main thread — all UI updates are safe.
+@MainActor
 final class AsyncAwaitDemoViewController: UIViewController {
+
+    // MARK: - UI
 
     private let loadButton: UIButton = {
         let button = UIButton(type: .system)
@@ -35,6 +40,13 @@ final class AsyncAwaitDemoViewController: UIViewController {
         return label
     }()
 
+    /// Текущая задача загрузки. Нужна для отмены при dismiss — иначе Task продолжит работу
+    /// и попытается обновить UI уже закрытого контроллера.
+    /// Current load task. Cancelled on dismiss to avoid updating UI of a dismissed controller.
+    private var loadTask: Task<Void, Never>?
+
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Async/Await Demo"
@@ -48,11 +60,56 @@ final class AsyncAwaitDemoViewController: UIViewController {
         setupActions()
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        // Отменяем загрузку при уходе с экрана — Task.sleep прервётся, UI не обновится.
+        // Cancel load when leaving screen — Task.sleep will be interrupted, no UI update.
+        loadTask?.cancel()
+    }
+
+    // MARK: - Actions
+
     @objc private func dismissTapped() {
         dismiss(animated: true)
     }
 
-    private func setupUI() {
+    /// @objc-методы синхронны — нельзя вызывать await напрямую. Task { } создаёт async-контекст
+    /// и наследует MainActor от класса, поэтому closure выполнится на main.
+    /// @objc methods are sync — can't use await. Task { } creates async context and inherits MainActor.
+    @objc private func loadTapped() {
+        loadButton.isEnabled = false
+        activityIndicator.startAnimating()
+
+        loadTask = Task {
+            // await приостанавливает выполнение, но не блокирует main thread — runtime переключается
+            // на другую работу. После возврата из loadData() мы снова на main (MainActor).
+            // await suspends execution without blocking main — runtime switches to other work.
+            let result = await loadData()
+
+            // Task мог быть отменён (пользователь закрыл экран). Проверяем перед обновлением UI.
+            // Task may have been cancelled (user dismissed). Check before updating UI.
+            guard !Task.isCancelled else { return }
+
+            resultLabel.text = result
+            activityIndicator.stopAnimating()
+            loadButton.isEnabled = true
+        }
+    }
+
+    // MARK: - Data Loading
+
+    /// Асинхронная загрузка. Вызывать только с await внутри async-контекста (Task или async func).
+    /// Simulates 2 sec load. Call only with await inside async context (Task or async func).
+    private func loadData() async -> String {
+        await SimulatedNetworkService.fetchText(delay: 2)
+    }
+}
+
+// MARK: - Layout
+
+private extension AsyncAwaitDemoViewController {
+
+    func setupUI() {
         view.addSubview(loadButton)
         view.addSubview(activityIndicator)
         view.addSubview(resultLabel)
@@ -70,18 +127,7 @@ final class AsyncAwaitDemoViewController: UIViewController {
         ])
     }
 
-    private func setupActions() {
+    func setupActions() {
         loadButton.addTarget(self, action: #selector(loadTapped), for: .touchUpInside)
-    }
-
-    @objc private func loadTapped() {
-        // TASK: Task { loadButton.isEnabled = false, activityIndicator.startAnimating(),
-        // let result = await loadData(), resultLabel.text = result, activityIndicator.stopAnimating(), loadButton.isEnabled = true }
-    }
-
-    /// Симулирует загрузку данных (2 сек). Вызывать с await.
-    /// Simulates data load (2 sec). Call with await.
-    private func loadData() async -> String {
-        await SimulatedNetworkService.fetchText(delay: 2)
     }
 }
