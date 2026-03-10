@@ -97,13 +97,54 @@ final class DispatchSourceDemoViewController: UIViewController {
     }
 
     @objc private func startTapped() {
+        // 1. Отмена старого таймера — защита от двойного Start / Cancel old timer — double Start guard
+        timer?.cancel()
+        timer = nil
+
+        // 2. Сброс состояния и UI / Reset state and UI
+        _seconds = 0
+        valueLabel.text = "0"
+        startButton.isEnabled = false
         statusLabel.text = "Running"
-        // TASK: cancel existing timer, reset _seconds, create DispatchSource.makeTimerSource(queue:),
-        // schedule(deadline: .now(), repeating: 1), setEventHandler { _seconds += 1; main.async update UI },
-        // resume()
+
+        // 3. Создание таймера на своей очереди (не RunLoop) / Create timer on its own queue (not RunLoop)
+        let newTimer = DispatchSource.makeTimerSource(queue: queue)
+        self.timer = newTimer
+        newTimer.schedule(deadline: .now(), repeating: 1.0)
+
+        // 4. Обработчик тика — выполняется на queue / Tick handler — runs on queue
+        newTimer.setEventHandler { [weak self] in
+            guard let self else { return }
+            self._seconds += 1
+            // Захватываем count на queue, передаём в main — избегаем data race (чтение _seconds с main)
+            // Capture count on queue, pass to main — avoid data race (reading _seconds from main)
+            let count = self._seconds
+            DispatchQueue.main.async { [weak self] in
+                guard let self, self.view.window != nil else { return }
+                self.valueLabel.text = "\(count)"
+            }
+        }
+
+        // 5. При отмене — сброс и включение Start / On cancel — reset and re-enable Start
+        newTimer.setCancelHandler { [weak self] in
+            guard let self else { return }
+            self._seconds = 0
+            DispatchQueue.main.async { [weak self] in
+                guard let self, self.view.window != nil else { return }
+                self.startButton.isEnabled = true
+            }
+        }
+
+        // 6. resume() обязателен — без него таймер не запустится / resume() required — timer won't start without it
+        newTimer.resume()
     }
 
     @objc private func stopTapped() {
-        // TASK: timer?.cancel(), timer = nil, status = "Stopped"
+        timer?.cancel()
+        timer = nil
+        // Синхронно включаем Start — cancel handler асинхронный, тест может tap до его выполнения
+        // Enable Start synchronously — cancel handler is async, test may tap before it runs
+        startButton.isEnabled = true
+        statusLabel.text = "Stopped"
     }
 }
