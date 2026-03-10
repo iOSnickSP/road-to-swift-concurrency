@@ -100,9 +100,31 @@ func loadData() async -> String {
 
 ## Задача / Task
 
-Реализуй демо: **загрузка данных** через async/await. Добавь `private func loadData() async -> String { await LoadSimulators.asyncSimulateLoad(delay: 2) }`. Кнопка «Load» — внутри `Task { let result = await loadData(); update UI }`. Покажи индикатор загрузки и результат.
+Реализуй демо: **загрузка данных** через async/await.
 
-Implement demo: **data loading** via async/await. Add `private func loadData() async -> String { await LoadSimulators.asyncSimulateLoad(delay: 2) }`. Button «Load» — inside `Task { let result = await loadData(); update UI }`. Show loading indicator and result.
+**Базовое:**
+- `private func loadData() async -> String { await LoadSimulators.asyncSimulateLoad(delay: 2) }`
+- Кнопка «Load» — обработчик синхронный (`@objc`), поэтому оберни вызов в `Task { }`. Внутри: `let result = await loadData()`, затем обнови UI.
+- Индикатор загрузки: показывай при нажатии, скрывай после завершения. Кнопку отключай на время загрузки.
+
+**Отмена при уходе с экрана:**
+- Что если пользователь нажмёт Done и закроет экран во время загрузки? Task продолжит работу и попытается обновить UI уже закрытого контроллера.
+- Сохрани `Task` в свойство — чтобы иметь возможность вызвать `cancel()`.
+- В `viewDidDisappear` отмени задачу: `loadTask?.cancel()`.
+- После `await loadData()` проверь `Task.isCancelled` — если отменено, не обновляй UI (просто `return`).
+
+**Implement demo: data loading via async/await.**
+
+**Basics:**
+- `private func loadData() async -> String { await LoadSimulators.asyncSimulateLoad(delay: 2) }`
+- Button «Load» — handler is sync (`@objc`), so wrap the call in `Task { }`. Inside: `let result = await loadData()`, then update UI.
+- Loading indicator: show on tap, hide when done. Disable button during load.
+
+**Cancellation on dismiss:**
+- What if the user taps Done and dismisses the screen during load? The Task will continue and try to update UI of a dismissed controller.
+- Store the `Task` in a property — so you can call `cancel()`.
+- In `viewDidDisappear`, cancel the task: `loadTask?.cancel()`.
+- After `await loadData()`, check `Task.isCancelled` — if cancelled, don't update UI (just `return`).
 
 ---
 
