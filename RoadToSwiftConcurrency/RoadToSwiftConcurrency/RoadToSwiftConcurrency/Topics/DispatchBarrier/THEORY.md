@@ -12,6 +12,18 @@ When you have a **concurrent queue** and need **thread-safe read/write** of shar
 
 ---
 
+## Применение / Application
+
+**Когда нужен:** кэш, словарь, общее состояние — много читателей, мало писателей. Нужна thread-safety без блокировки чтения (serial queue блокирует всё).
+
+**When to use:** cache, dictionary, shared state — many readers, few writers. Need thread-safety without blocking reads (serial queue blocks everything).
+
+**Типичные задачи:** in-memory кэш (чтение часто, запись редко), кэш изображений, настройки приложения, shared mutable state.
+
+**Typical tasks:** in-memory cache (read often, write rarely), image cache, app settings, shared mutable state.
+
+---
+
 ## Паттерн / Pattern
 
 ```swift
@@ -29,6 +41,12 @@ func write(_ value: T) {
 ```
 
 **Важно / Important:** Очередь должна быть **concurrent** (`attributes: .concurrent`). На serial queue barrier не имеет смысла.
+
+---
+
+## Дальше / Next
+
+- `DispatchSource.timer` — таймеры без RunLoop / timers without RunLoop
 
 ---
 

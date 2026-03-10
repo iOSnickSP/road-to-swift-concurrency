@@ -8,6 +8,18 @@ When you need to **cancel a task before it runs**. `DispatchWorkItem` can be can
 
 ---
 
+## Применение / Application
+
+**Когда нужен:** пользователь может отменить операцию (Cancel, уход с экрана), или задача устарела (новый поиск отменил предыдущий). Задачи в очереди ещё не начались — их можно отменить.
+
+**When to use:** user can cancel an operation (Cancel button, leaving screen), or task became stale (new search cancelled previous). Queued tasks haven't started — they can be cancelled.
+
+**Типичные задачи:** отмена загрузки по кнопке, последовательная обработка с возможностью прервать, debounce (новый запрос отменяет старый в очереди).
+
+**Typical tasks:** cancel load on button tap, sequential processing with abort option, debounce (new request cancels queued one).
+
+---
+
 ## Основные методы / Main Methods
 
 | Метод/свойство | Описание |

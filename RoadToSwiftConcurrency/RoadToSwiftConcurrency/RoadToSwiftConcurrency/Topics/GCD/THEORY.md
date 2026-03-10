@@ -8,6 +8,18 @@ GCD is Apple's low-level API for concurrency. Based on queues and closures. Work
 
 ---
 
+## Применение / Application
+
+**Когда нужен:** любая фоновая работа — загрузка данных, парсинг, вычисления. Паттерн «фон → main» — основа: тяжёлое в фоне, обновление UI на main.
+
+**When to use:** any background work — loading data, parsing, computations. The "background → main" pattern is fundamental: heavy work in background, UI updates on main.
+
+**Типичные задачи:** загрузка с сети, чтение файлов, обработка изображений, обновление списков после фоновой загрузки.
+
+**Typical tasks:** network fetch, file I/O, image processing, list refresh after background load.
+
+---
+
 ## Очереди (Queues)
 
 ### Main Queue

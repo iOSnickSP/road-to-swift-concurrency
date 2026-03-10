@@ -8,6 +8,18 @@ When you need to **wait for multiple async tasks to complete** before the next s
 
 ---
 
+## Применение / Application
+
+**Когда нужен:** несколько независимых задач запускаются параллельно, но следующий шаг (обновление UI, сохранение, переход) должен выполниться только когда **все** завершены.
+
+**When to use:** multiple independent tasks run in parallel, but the next step (UI update, save, navigation) must run only when **all** complete.
+
+**Типичные задачи:** загрузка нескольких ресурсов (картинки, JSON), параллельные API-запросы, агрегация результатов из разных источников.
+
+**Typical tasks:** loading multiple resources (images, JSON), parallel API calls, aggregating results from different sources.
+
+---
+
 ## Основные методы / Main Methods
 
 | Метод | Описание |

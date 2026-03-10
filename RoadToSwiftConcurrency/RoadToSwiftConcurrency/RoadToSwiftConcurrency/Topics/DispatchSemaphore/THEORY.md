@@ -8,6 +8,18 @@ When you need to **limit how many tasks run concurrently**. E.g.: load 10 images
 
 ---
 
+## Применение / Application
+
+**Когда нужен:** много задач, но ограниченный ресурс — сеть, память, соединения с БД. Без лимита можно исчерпать соединения или вызвать throttling.
+
+**When to use:** many tasks but limited resource — network, memory, DB connections. Without a limit you can exhaust connections or trigger throttling.
+
+**Типичные задачи:** массовая загрузка изображений (max N одновременно), пул соединений, rate limiting API-запросов, ограничение параллельных операций с диском.
+
+**Typical tasks:** bulk image loading (max N at once), connection pool, API rate limiting, limiting parallel disk I/O.
+
+---
+
 ## Основные методы / Main Methods
 
 | Метод | Описание |
