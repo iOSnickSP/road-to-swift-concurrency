@@ -73,6 +73,14 @@ class ViewController: UIViewController {
         return button
     }()
 
+    private let asyncAwaitButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Async/Await Demo", for: .normal)
+        button.accessibilityIdentifier = "topics.asyncAwaitDemo"
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Topics"
@@ -89,9 +97,10 @@ class ViewController: UIViewController {
         view.addSubview(dispatchSourceButton)
         view.addSubview(operationQueueButton)
         view.addSubview(concurrentPerformButton)
+        view.addSubview(asyncAwaitButton)
         NSLayoutConstraint.activate([
             gcdDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -210),
+            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -245),
 
             dispatchGroupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             dispatchGroupButton.topAnchor.constraint(equalTo: gcdDemoButton.bottomAnchor, constant: 16),
@@ -112,7 +121,10 @@ class ViewController: UIViewController {
             operationQueueButton.topAnchor.constraint(equalTo: dispatchSourceButton.bottomAnchor, constant: 16),
 
             concurrentPerformButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            concurrentPerformButton.topAnchor.constraint(equalTo: operationQueueButton.bottomAnchor, constant: 16)
+            concurrentPerformButton.topAnchor.constraint(equalTo: operationQueueButton.bottomAnchor, constant: 16),
+
+            asyncAwaitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            asyncAwaitButton.topAnchor.constraint(equalTo: concurrentPerformButton.bottomAnchor, constant: 16)
         ])
     }
 
@@ -125,6 +137,13 @@ class ViewController: UIViewController {
         dispatchSourceButton.addTarget(self, action: #selector(openDispatchSourceDemo), for: .touchUpInside)
         operationQueueButton.addTarget(self, action: #selector(openOperationQueueDemo), for: .touchUpInside)
         concurrentPerformButton.addTarget(self, action: #selector(openConcurrentPerformDemo), for: .touchUpInside)
+        asyncAwaitButton.addTarget(self, action: #selector(openAsyncAwaitDemo), for: .touchUpInside)
+    }
+
+    @objc private func openAsyncAwaitDemo() {
+        let demo = AsyncAwaitDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
     }
 
     @objc private func openConcurrentPerformDemo() {

@@ -42,6 +42,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 | DispatchSource | `solution/dispatch-source` |
 | OperationQueue | `solution/operation-queue` |
 | concurrentPerform | `solution/concurrent-perform` |
+| Async/Await | `solution/async-await` |
 
 **Как использовать:** реши задачу сам → застрял или хочешь сверить подход → переключись на ветку решения.
 
@@ -59,6 +60,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **DispatchSource** — таймеры, события системы / timers, system events (секундомер / stopwatch)
 - **OperationQueue** — зависимости между операциями / operation dependencies (A → B → C)
 - **concurrentPerform** — параллельная итерация по диапазону / parallel iteration (5 элементов)
+- **Async/Await** — современная замена GCD / modern replacement for GCD (загрузка через Task)
 
 ---
 

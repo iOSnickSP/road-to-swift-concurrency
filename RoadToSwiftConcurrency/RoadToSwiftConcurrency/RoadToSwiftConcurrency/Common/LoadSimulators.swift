@@ -21,4 +21,10 @@ enum LoadSimulators {
         Thread.sleep(forTimeInterval: resolvedDelay)
         return "Resource \(id)"
     }
+
+    /// AsyncAwait demo: simulates async data load. Call with await.
+    static func asyncSimulateLoad(delay: TimeInterval = 2) async -> String {
+        try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+        return "Data loaded: \(Date())"
+    }
 }

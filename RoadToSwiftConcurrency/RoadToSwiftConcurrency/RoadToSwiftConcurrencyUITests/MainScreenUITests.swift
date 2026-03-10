@@ -26,6 +26,7 @@ final class MainScreenUITests: XCTestCase {
         XCTAssertTrue(app.buttons["topics.dispatchSourceDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.operationQueueDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.concurrentPerformDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.asyncAwaitDemo"].waitForExistence(timeout: 2))
     }
 
     @MainActor
@@ -106,5 +107,15 @@ final class MainScreenUITests: XCTestCase {
         app.buttons["topics.concurrentPerformDemo"].tap()
         XCTAssertTrue(app.buttons["concurrentPerform.process"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.staticTexts["concurrentPerform.status"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToAsyncAwaitDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.asyncAwaitDemo"].tap()
+        XCTAssertTrue(app.buttons["asyncAwait.load"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["asyncAwait.result"].waitForExistence(timeout: 2))
     }
 }
