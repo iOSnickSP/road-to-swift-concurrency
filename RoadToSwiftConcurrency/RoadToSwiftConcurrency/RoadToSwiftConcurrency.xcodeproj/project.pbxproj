@@ -40,6 +40,7 @@
 				Topics/DispatchSource/THEORY.md,
 				Topics/DispatchWorkItem/THEORY.md,
 				Topics/GCD/THEORY.md,
+				Topics/OperationQueue/THEORY.md,
 			);
 			target = 0162FF152F5C705F00955193 /* RoadToSwiftConcurrency */;
 		};

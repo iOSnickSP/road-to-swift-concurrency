@@ -44,6 +44,12 @@ After `makeTimerSource` you must call `resume()`. `cancel()` is one-shot, source
 
 ---
 
+## Дальше / Next
+
+- `OperationQueue` — зависимости между операциями / operation dependencies
+
+---
+
 ## Задача / Task
 
 Реализуй демо: **секундомер**. Кнопка «Start» — создаёт `DispatchSource.timer`, тикает каждую секунду, увеличивает счётчик. Кнопка «Stop» — отменяет таймер. Label показывает прошедшие секунды. При повторном Start — сброс и новый таймер.

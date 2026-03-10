@@ -17,8 +17,8 @@ enum LoadSimulators {
 
     /// DispatchGroup demo: simulates resource load. Call from background thread.
     static func dispatchGroupLoadResource(id: Int, delay: TimeInterval? = nil) -> String {
-        let d = delay ?? Double(id) * 0.5 + 1.0
-        Thread.sleep(forTimeInterval: d)
+        let resolvedDelay = delay ?? Double(id) * 0.5 + 1.0
+        Thread.sleep(forTimeInterval: resolvedDelay)
         return "Resource \(id)"
     }
 }

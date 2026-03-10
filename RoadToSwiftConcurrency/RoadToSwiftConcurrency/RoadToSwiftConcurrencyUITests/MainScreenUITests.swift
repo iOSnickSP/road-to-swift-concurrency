@@ -22,6 +22,9 @@ final class MainScreenUITests: XCTestCase {
         XCTAssertTrue(app.buttons["topics.dispatchGroupDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.dispatchSemaphoreDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.dispatchWorkItemDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.dispatchBarrierDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.dispatchSourceDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.operationQueueDemo"].waitForExistence(timeout: 2))
     }
 
     @MainActor
@@ -62,5 +65,35 @@ final class MainScreenUITests: XCTestCase {
         app.buttons["topics.dispatchWorkItemDemo"].tap()
         XCTAssertTrue(app.buttons["dispatchWorkItem.load"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["dispatchWorkItem.cancel"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToDispatchBarrierDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.dispatchBarrierDemo"].tap()
+        XCTAssertTrue(app.buttons["dispatchBarrier.increment"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["dispatchBarrier.read"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToDispatchSourceDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.dispatchSourceDemo"].tap()
+        XCTAssertTrue(app.buttons["dispatchSource.start"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["dispatchSource.stop"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToOperationQueueDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.operationQueueDemo"].tap()
+        XCTAssertTrue(app.buttons["operationQueue.load"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["operationQueue.status"].waitForExistence(timeout: 2))
     }
 }

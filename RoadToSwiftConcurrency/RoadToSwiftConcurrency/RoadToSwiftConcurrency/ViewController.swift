@@ -57,6 +57,14 @@ class ViewController: UIViewController {
         return button
     }()
 
+    private let operationQueueButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("OperationQueue Demo", for: .normal)
+        button.accessibilityIdentifier = "topics.operationQueueDemo"
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Topics"
@@ -71,9 +79,10 @@ class ViewController: UIViewController {
         view.addSubview(dispatchWorkItemButton)
         view.addSubview(dispatchBarrierButton)
         view.addSubview(dispatchSourceButton)
+        view.addSubview(operationQueueButton)
         NSLayoutConstraint.activate([
             gcdDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -140),
+            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -175),
 
             dispatchGroupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             dispatchGroupButton.topAnchor.constraint(equalTo: gcdDemoButton.bottomAnchor, constant: 16),
@@ -88,7 +97,10 @@ class ViewController: UIViewController {
             dispatchBarrierButton.topAnchor.constraint(equalTo: dispatchWorkItemButton.bottomAnchor, constant: 16),
 
             dispatchSourceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dispatchSourceButton.topAnchor.constraint(equalTo: dispatchBarrierButton.bottomAnchor, constant: 16)
+            dispatchSourceButton.topAnchor.constraint(equalTo: dispatchBarrierButton.bottomAnchor, constant: 16),
+
+            operationQueueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            operationQueueButton.topAnchor.constraint(equalTo: dispatchSourceButton.bottomAnchor, constant: 16)
         ])
     }
 
@@ -99,6 +111,13 @@ class ViewController: UIViewController {
         dispatchWorkItemButton.addTarget(self, action: #selector(openDispatchWorkItemDemo), for: .touchUpInside)
         dispatchBarrierButton.addTarget(self, action: #selector(openDispatchBarrierDemo), for: .touchUpInside)
         dispatchSourceButton.addTarget(self, action: #selector(openDispatchSourceDemo), for: .touchUpInside)
+        operationQueueButton.addTarget(self, action: #selector(openOperationQueueDemo), for: .touchUpInside)
+    }
+
+    @objc private func openOperationQueueDemo() {
+        let demo = OperationQueueDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
     }
 
     @objc private func openDispatchSourceDemo() {

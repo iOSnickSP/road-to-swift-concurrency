@@ -38,6 +38,9 @@ From each `main` commit there is a branch with the **reference solution**. These
 | DispatchGroup | `solution/dispatch-group` |
 | DispatchSemaphore | `solution/dispatch-semaphore` |
 | DispatchWorkItem | `solution/dispatch-work-item` |
+| DispatchBarrier | `solution/dispatch-barrier` |
+| DispatchSource | `solution/dispatch-source` |
+| OperationQueue | `solution/operation-queue` |
 
 **Как использовать:** реши задачу сам → застрял или хочешь сверить подход → переключись на ветку решения.
 
@@ -51,6 +54,9 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **DispatchGroup** — ожидание завершения нескольких задач / waiting for multiple tasks to complete
 - **DispatchSemaphore** — ограничение параллелизма / limiting concurrency (5 задач, max 2 одновременно)
 - **DispatchWorkItem** — отмена задач / task cancellation (3 ресурса последовательно, Cancel)
+- **DispatchBarrier** — thread-safe read/write на concurrent queue / barrier for exclusive writes
+- **DispatchSource** — таймеры, события системы / timers, system events (секундомер / stopwatch)
+- **OperationQueue** — зависимости между операциями / operation dependencies (A → B → C)
 
 ---
 
