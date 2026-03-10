@@ -81,6 +81,14 @@ class ViewController: UIViewController {
         return button
     }()
 
+    private let sendableDemoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Sendable Demo", for: .normal)
+        button.accessibilityIdentifier = "topics.sendableDemo"
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Topics"
@@ -98,6 +106,7 @@ class ViewController: UIViewController {
         view.addSubview(operationQueueButton)
         view.addSubview(concurrentPerformButton)
         view.addSubview(asyncAwaitButton)
+        view.addSubview(sendableDemoButton)
         NSLayoutConstraint.activate([
             gcdDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -245),
@@ -124,7 +133,10 @@ class ViewController: UIViewController {
             concurrentPerformButton.topAnchor.constraint(equalTo: operationQueueButton.bottomAnchor, constant: 16),
 
             asyncAwaitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            asyncAwaitButton.topAnchor.constraint(equalTo: concurrentPerformButton.bottomAnchor, constant: 16)
+            asyncAwaitButton.topAnchor.constraint(equalTo: concurrentPerformButton.bottomAnchor, constant: 16),
+
+            sendableDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            sendableDemoButton.topAnchor.constraint(equalTo: asyncAwaitButton.bottomAnchor, constant: 16)
         ])
     }
 
@@ -138,6 +150,13 @@ class ViewController: UIViewController {
         operationQueueButton.addTarget(self, action: #selector(openOperationQueueDemo), for: .touchUpInside)
         concurrentPerformButton.addTarget(self, action: #selector(openConcurrentPerformDemo), for: .touchUpInside)
         asyncAwaitButton.addTarget(self, action: #selector(openAsyncAwaitDemo), for: .touchUpInside)
+        sendableDemoButton.addTarget(self, action: #selector(openSendableDemo), for: .touchUpInside)
+    }
+
+    @objc private func openSendableDemo() {
+        let demo = SendableDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
     }
 
     @objc private func openAsyncAwaitDemo() {
