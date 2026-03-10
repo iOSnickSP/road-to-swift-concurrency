@@ -25,6 +25,7 @@ final class MainScreenUITests: XCTestCase {
         XCTAssertTrue(app.buttons["topics.dispatchBarrierDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.dispatchSourceDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.operationQueueDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.concurrentPerformDemo"].waitForExistence(timeout: 2))
     }
 
     @MainActor
@@ -95,5 +96,15 @@ final class MainScreenUITests: XCTestCase {
         app.buttons["topics.operationQueueDemo"].tap()
         XCTAssertTrue(app.buttons["operationQueue.load"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.staticTexts["operationQueue.status"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToConcurrentPerformDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.concurrentPerformDemo"].tap()
+        XCTAssertTrue(app.buttons["concurrentPerform.process"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["concurrentPerform.status"].waitForExistence(timeout: 2))
     }
 }

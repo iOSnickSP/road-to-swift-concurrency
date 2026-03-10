@@ -39,6 +39,7 @@
 				Topics/DispatchSemaphore/THEORY.md,
 				Topics/DispatchSource/THEORY.md,
 				Topics/DispatchWorkItem/THEORY.md,
+				Topics/ConcurrentPerform/THEORY.md,
 				Topics/GCD/THEORY.md,
 				Topics/OperationQueue/THEORY.md,
 			);

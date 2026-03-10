@@ -46,7 +46,7 @@ Dependencies are set before adding to queue. `addDependency` creates order A →
 
 ## Дальше / Next
 
-- `async/await` — современная замена GCD / modern replacement for GCD
+- `concurrentPerform` — параллельная итерация по диапазону / parallel iteration
 
 ---
 

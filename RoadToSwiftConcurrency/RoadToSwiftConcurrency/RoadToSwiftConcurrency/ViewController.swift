@@ -65,6 +65,14 @@ class ViewController: UIViewController {
         return button
     }()
 
+    private let concurrentPerformButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("concurrentPerform Demo", for: .normal)
+        button.accessibilityIdentifier = "topics.concurrentPerformDemo"
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Topics"
@@ -80,9 +88,10 @@ class ViewController: UIViewController {
         view.addSubview(dispatchBarrierButton)
         view.addSubview(dispatchSourceButton)
         view.addSubview(operationQueueButton)
+        view.addSubview(concurrentPerformButton)
         NSLayoutConstraint.activate([
             gcdDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -175),
+            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -210),
 
             dispatchGroupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             dispatchGroupButton.topAnchor.constraint(equalTo: gcdDemoButton.bottomAnchor, constant: 16),
@@ -100,7 +109,10 @@ class ViewController: UIViewController {
             dispatchSourceButton.topAnchor.constraint(equalTo: dispatchBarrierButton.bottomAnchor, constant: 16),
 
             operationQueueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            operationQueueButton.topAnchor.constraint(equalTo: dispatchSourceButton.bottomAnchor, constant: 16)
+            operationQueueButton.topAnchor.constraint(equalTo: dispatchSourceButton.bottomAnchor, constant: 16),
+
+            concurrentPerformButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            concurrentPerformButton.topAnchor.constraint(equalTo: operationQueueButton.bottomAnchor, constant: 16)
         ])
     }
 
@@ -112,6 +124,13 @@ class ViewController: UIViewController {
         dispatchBarrierButton.addTarget(self, action: #selector(openDispatchBarrierDemo), for: .touchUpInside)
         dispatchSourceButton.addTarget(self, action: #selector(openDispatchSourceDemo), for: .touchUpInside)
         operationQueueButton.addTarget(self, action: #selector(openOperationQueueDemo), for: .touchUpInside)
+        concurrentPerformButton.addTarget(self, action: #selector(openConcurrentPerformDemo), for: .touchUpInside)
+    }
+
+    @objc private func openConcurrentPerformDemo() {
+        let demo = ConcurrentPerformDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
     }
 
     @objc private func openOperationQueueDemo() {

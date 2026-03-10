@@ -41,6 +41,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 | DispatchBarrier | `solution/dispatch-barrier` |
 | DispatchSource | `solution/dispatch-source` |
 | OperationQueue | `solution/operation-queue` |
+| concurrentPerform | `solution/concurrent-perform` |
 
 **Как использовать:** реши задачу сам → застрял или хочешь сверить подход → переключись на ветку решения.
 
@@ -57,6 +58,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **DispatchBarrier** — thread-safe read/write на concurrent queue / barrier for exclusive writes
 - **DispatchSource** — таймеры, события системы / timers, system events (секундомер / stopwatch)
 - **OperationQueue** — зависимости между операциями / operation dependencies (A → B → C)
+- **concurrentPerform** — параллельная итерация по диапазону / parallel iteration (5 элементов)
 
 ---
 
