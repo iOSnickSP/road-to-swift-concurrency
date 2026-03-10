@@ -25,7 +25,7 @@ final class ResourceProgressRow: UIView {
     }()
 
     private let spinner: UIActivityIndicatorView = {
-        let s = UIActivityIndicatorView(style: .small)
+        let s = UIActivityIndicatorView(style: .medium)
         s.hidesWhenStopped = true
         s.translatesAutoresizingMaskIntoConstraints = false
         return s
