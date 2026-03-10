@@ -41,6 +41,22 @@ class ViewController: UIViewController {
         return button
     }()
 
+    private let dispatchBarrierButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("DispatchBarrier Demo", for: .normal)
+        button.accessibilityIdentifier = "topics.dispatchBarrierDemo"
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private let dispatchSourceButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("DispatchSource Demo", for: .normal)
+        button.accessibilityIdentifier = "topics.dispatchSourceDemo"
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Topics"
@@ -53,9 +69,11 @@ class ViewController: UIViewController {
         view.addSubview(dispatchGroupButton)
         view.addSubview(dispatchSemaphoreButton)
         view.addSubview(dispatchWorkItemButton)
+        view.addSubview(dispatchBarrierButton)
+        view.addSubview(dispatchSourceButton)
         NSLayoutConstraint.activate([
             gcdDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70),
+            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -140),
 
             dispatchGroupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             dispatchGroupButton.topAnchor.constraint(equalTo: gcdDemoButton.bottomAnchor, constant: 16),
@@ -64,7 +82,13 @@ class ViewController: UIViewController {
             dispatchSemaphoreButton.topAnchor.constraint(equalTo: dispatchGroupButton.bottomAnchor, constant: 16),
 
             dispatchWorkItemButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dispatchWorkItemButton.topAnchor.constraint(equalTo: dispatchSemaphoreButton.bottomAnchor, constant: 16)
+            dispatchWorkItemButton.topAnchor.constraint(equalTo: dispatchSemaphoreButton.bottomAnchor, constant: 16),
+
+            dispatchBarrierButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            dispatchBarrierButton.topAnchor.constraint(equalTo: dispatchWorkItemButton.bottomAnchor, constant: 16),
+
+            dispatchSourceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            dispatchSourceButton.topAnchor.constraint(equalTo: dispatchBarrierButton.bottomAnchor, constant: 16)
         ])
     }
 
@@ -73,6 +97,20 @@ class ViewController: UIViewController {
         dispatchGroupButton.addTarget(self, action: #selector(openDispatchGroupDemo), for: .touchUpInside)
         dispatchSemaphoreButton.addTarget(self, action: #selector(openDispatchSemaphoreDemo), for: .touchUpInside)
         dispatchWorkItemButton.addTarget(self, action: #selector(openDispatchWorkItemDemo), for: .touchUpInside)
+        dispatchBarrierButton.addTarget(self, action: #selector(openDispatchBarrierDemo), for: .touchUpInside)
+        dispatchSourceButton.addTarget(self, action: #selector(openDispatchSourceDemo), for: .touchUpInside)
+    }
+
+    @objc private func openDispatchSourceDemo() {
+        let demo = DispatchSourceDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
+    }
+
+    @objc private func openDispatchBarrierDemo() {
+        let demo = DispatchBarrierDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
     }
 
     @objc private func openDispatchWorkItemDemo() {

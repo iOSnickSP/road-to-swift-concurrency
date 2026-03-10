@@ -34,8 +34,10 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Topics/DispatchBarrier/THEORY.md,
 				Topics/DispatchGroup/THEORY.md,
 				Topics/DispatchSemaphore/THEORY.md,
+				Topics/DispatchSource/THEORY.md,
 				Topics/DispatchWorkItem/THEORY.md,
 				Topics/GCD/THEORY.md,
 			);
