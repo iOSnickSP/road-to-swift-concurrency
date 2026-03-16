@@ -83,7 +83,7 @@ Task {
 
 ## Дальше / Next
 
-- `@unchecked Sendable` — когда компилятор не может вывести, но ты уверен
+- `@unchecked Sendable` — когда компилятор не может вывести, но ты уверен (ThreadSafeBox)
 - `SerialExecutor` — привязка actor к конкретной очереди
 
 ---

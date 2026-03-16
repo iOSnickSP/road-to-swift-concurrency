@@ -89,6 +89,14 @@ class ViewController: UIViewController {
         return button
     }()
 
+    private let uncheckedSendableDemoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("@unchecked Sendable Demo", for: .normal)
+        button.accessibilityIdentifier = "topics.uncheckedSendableDemo"
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Topics"
@@ -107,6 +115,7 @@ class ViewController: UIViewController {
         view.addSubview(concurrentPerformButton)
         view.addSubview(asyncAwaitButton)
         view.addSubview(sendableDemoButton)
+        view.addSubview(uncheckedSendableDemoButton)
         NSLayoutConstraint.activate([
             gcdDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -245),
@@ -136,7 +145,10 @@ class ViewController: UIViewController {
             asyncAwaitButton.topAnchor.constraint(equalTo: concurrentPerformButton.bottomAnchor, constant: 16),
 
             sendableDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            sendableDemoButton.topAnchor.constraint(equalTo: asyncAwaitButton.bottomAnchor, constant: 16)
+            sendableDemoButton.topAnchor.constraint(equalTo: asyncAwaitButton.bottomAnchor, constant: 16),
+
+            uncheckedSendableDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            uncheckedSendableDemoButton.topAnchor.constraint(equalTo: sendableDemoButton.bottomAnchor, constant: 16)
         ])
     }
 
@@ -151,6 +163,13 @@ class ViewController: UIViewController {
         concurrentPerformButton.addTarget(self, action: #selector(openConcurrentPerformDemo), for: .touchUpInside)
         asyncAwaitButton.addTarget(self, action: #selector(openAsyncAwaitDemo), for: .touchUpInside)
         sendableDemoButton.addTarget(self, action: #selector(openSendableDemo), for: .touchUpInside)
+        uncheckedSendableDemoButton.addTarget(self, action: #selector(openUncheckedSendableDemo), for: .touchUpInside)
+    }
+
+    @objc private func openUncheckedSendableDemo() {
+        let demo = UncheckedSendableDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
     }
 
     @objc private func openSendableDemo() {

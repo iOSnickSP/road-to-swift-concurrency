@@ -35,15 +35,16 @@
 			membershipExceptions = (
 				Info.plist,
 				Topics/AsyncAwait/THEORY.md,
+				Topics/ConcurrentPerform/THEORY.md,
 				Topics/DispatchBarrier/THEORY.md,
 				Topics/DispatchGroup/THEORY.md,
 				Topics/DispatchSemaphore/THEORY.md,
 				Topics/DispatchSource/THEORY.md,
 				Topics/DispatchWorkItem/THEORY.md,
-				Topics/ConcurrentPerform/THEORY.md,
 				Topics/GCD/THEORY.md,
 				Topics/OperationQueue/THEORY.md,
 				Topics/Sendable/THEORY.md,
+				Topics/UncheckedSendable/THEORY.md,
 			);
 			target = 0162FF152F5C705F00955193 /* RoadToSwiftConcurrency */;
 		};

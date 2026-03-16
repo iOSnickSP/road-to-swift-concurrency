@@ -28,6 +28,7 @@ final class MainScreenUITests: XCTestCase {
         XCTAssertTrue(app.buttons["topics.concurrentPerformDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.asyncAwaitDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.sendableDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.uncheckedSendableDemo"].waitForExistence(timeout: 2))
     }
 
     @MainActor
@@ -128,5 +129,15 @@ final class MainScreenUITests: XCTestCase {
         app.buttons["topics.sendableDemo"].tap()
         XCTAssertTrue(app.buttons["sendableDemo.send"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["sendableDemo.receive"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToUncheckedSendableDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.uncheckedSendableDemo"].tap()
+        XCTAssertTrue(app.buttons["uncheckedSendable.store"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["uncheckedSendable.retrieve"].waitForExistence(timeout: 2))
     }
 }
