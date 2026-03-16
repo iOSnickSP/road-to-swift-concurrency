@@ -8,23 +8,32 @@
 
 import UIKit
 
-/// TASK: Добавь try? await Task.sleep(nanoseconds: 300_000_000) в начало increment().
-/// Add try? await Task.sleep(nanoseconds: 300_000_000) at the start of increment().
+/// Actor изолирует состояние — доступ только через await. Сериализует вызовы increment().
+/// Actor isolates state — access only via await. Serializes increment() calls.
 actor CounterActor {
     private var count = 0
 
+    /// Увеличивает на 1. Task.sleep — для наглядности сериализации при быстрых нажатиях.
+    /// Increments by 1. Task.sleep — to show serialization on rapid taps.
     func increment() async -> Int {
-        // TASK: try? await Task.sleep(nanoseconds: 300_000_000), затем count += 1; return count
-        return 0
+        try? await Task.sleep(nanoseconds: 300_000_000)
+        count += 1
+        return count
     }
 }
 
 @MainActor
 final class ActorDemoViewController: UIViewController {
 
+    // MARK: - State
+
     private let counter = CounterActor()
 
+    /// Текущая задача. Отменяется при уходе с экрана.
+    /// Current task. Cancelled when leaving screen.
     private var incrementTask: Task<Void, Never>?
+
+    // MARK: - UI
 
     private let addButton: UIButton = {
         let button = UIButton(type: .system)
@@ -57,15 +66,26 @@ final class ActorDemoViewController: UIViewController {
         setupActions()
     }
 
-    // TASK: override func viewWillDisappear(_ animated: Bool) { super.viewWillDisappear(animated); incrementTask?.cancel() }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        incrementTask?.cancel()
+    }
+
+    // MARK: - Actions
 
     @objc private func dismissTapped() {
         dismiss(animated: true)
     }
 
     @objc private func addTapped() {
-        // TASK: incrementTask = Task { let n = await counter.increment(); guard !Task.isCancelled else { return }; countLabel.text = "\(n)" }
+        incrementTask = Task {
+            let n = await counter.increment()
+            guard !Task.isCancelled else { return }
+            countLabel.text = "\(n)"
+        }
     }
+
+    // MARK: - Layout
 
     private func setupUI() {
         view.addSubview(addButton)
