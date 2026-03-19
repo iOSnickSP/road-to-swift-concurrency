@@ -8,9 +8,10 @@
 
 import UIKit
 
-/// TASK: сделай ThreadSafeBox совместимым с проверками Sendable (см. THEORY.md).
-/// TASK: make ThreadSafeBox satisfy Sendable checking (see THEORY.md).
-final class ThreadSafeBox<T> {
+/// Обёртка над mutable значением с lock. Компилятор не видит, что lock защищает _value —
+/// поэтому нужен @unchecked Sendable. Без него нельзя передать Box в Task/actor.
+/// Wrapper over mutable value with lock. Compiler doesn't see lock protects _value — hence @unchecked Sendable.
+final class ThreadSafeBox<T>: @unchecked Sendable {
     private let lock = NSLock()
     private var _value: T?
 
@@ -30,7 +31,11 @@ final class ThreadSafeBox<T> {
 @MainActor
 final class UncheckedSendableDemoViewController: UIViewController {
 
+    // MARK: - State
+
     private let box = ThreadSafeBox<String>()
+
+    // MARK: - UI
 
     private let textField: UITextField = {
         let field = UITextField()
@@ -67,6 +72,8 @@ final class UncheckedSendableDemoViewController: UIViewController {
         return label
     }()
 
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "@unchecked Sendable Demo"
@@ -80,19 +87,34 @@ final class UncheckedSendableDemoViewController: UIViewController {
         setupActions()
     }
 
+    // MARK: - Actions
+
     @objc private func dismissTapped() {
         dismiss(animated: true)
     }
 
+    /// Task захватывает box — нужен Sendable. ThreadSafeBox: @unchecked Sendable.
+    /// Task captures box — needs Sendable. ThreadSafeBox: @unchecked Sendable.
     @objc private func storeTapped() {
-        // TASK: фоновый доступ к box.set (см. THEORY) после того, как ThreadSafeBox станет Sendable
+        let text = textField.text ?? ""
+        Task {
+            box.set(text)
+        }
     }
 
     @objc private func retrieveTapped() {
-        // TASK: box.get и обновление resultLabel на main
+        Task {
+            let value = box.get()
+            resultLabel.text = value ?? "(empty)"
+        }
     }
+}
 
-    private func setupUI() {
+// MARK: - Layout
+
+private extension UncheckedSendableDemoViewController {
+
+    func setupUI() {
         view.addSubview(textField)
         view.addSubview(storeButton)
         view.addSubview(retrieveButton)
@@ -116,7 +138,7 @@ final class UncheckedSendableDemoViewController: UIViewController {
         ])
     }
 
-    private func setupActions() {
+    func setupActions() {
         storeButton.addTarget(self, action: #selector(storeTapped), for: .touchUpInside)
         retrieveButton.addTarget(self, action: #selector(retrieveTapped), for: .touchUpInside)
     }
