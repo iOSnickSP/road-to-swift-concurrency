@@ -71,7 +71,7 @@ Lock protects access to `_value`. Class is thread-safe. Compiler doesn't see the
 
 ## Дальше / Next
 
-- `SerialExecutor` — привязка actor к конкретной очереди / binding actor to a queue
+- `SerialExecutor` — привязка actor к конкретной очереди / binding actor to a queue (QueueBoundCounter)
 
 ---
 

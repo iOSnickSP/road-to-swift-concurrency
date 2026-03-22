@@ -45,6 +45,7 @@
 				Topics/OperationQueue/THEORY.md,
 				Topics/Sendable/THEORY.md,
 				Topics/UncheckedSendable/THEORY.md,
+				Topics/SerialExecutor/THEORY.md,
 			);
 			target = 0162FF152F5C705F00955193 /* RoadToSwiftConcurrency */;
 		};

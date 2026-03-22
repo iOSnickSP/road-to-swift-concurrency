@@ -46,6 +46,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 | Actor | `solution/actor` |
 | Sendable | `solution/sendable` |
 | @unchecked Sendable | `solution/unchecked-sendable` |
+| SerialExecutor | `solution/serial-executor` |
 
 **Как использовать:** реши задачу сам → застрял или хочешь сверить подход → переключись на ветку решения.
 
@@ -67,6 +68,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **Actor** — изоляция состояния / state isolation (счётчик)
 - **Sendable** — что можно передавать между actor'ами / what can cross actor boundaries (исправь код)
 - **@unchecked Sendable** — ручная конформность для thread-safe class / manual conformance for thread-safe class
+- **SerialExecutor** — привязка actor к DispatchQueue / binding actor to custom queue
 
 ---
 

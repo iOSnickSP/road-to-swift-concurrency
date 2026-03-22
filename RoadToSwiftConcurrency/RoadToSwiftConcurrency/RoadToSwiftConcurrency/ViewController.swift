@@ -97,6 +97,14 @@ class ViewController: UIViewController {
         return button
     }()
 
+    private let serialExecutorDemoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("SerialExecutor Demo", for: .normal)
+        button.accessibilityIdentifier = "topics.serialExecutorDemo"
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Topics"
@@ -116,6 +124,7 @@ class ViewController: UIViewController {
         view.addSubview(asyncAwaitButton)
         view.addSubview(sendableDemoButton)
         view.addSubview(uncheckedSendableDemoButton)
+        view.addSubview(serialExecutorDemoButton)
         NSLayoutConstraint.activate([
             gcdDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -245),
@@ -148,7 +157,10 @@ class ViewController: UIViewController {
             sendableDemoButton.topAnchor.constraint(equalTo: asyncAwaitButton.bottomAnchor, constant: 16),
 
             uncheckedSendableDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            uncheckedSendableDemoButton.topAnchor.constraint(equalTo: sendableDemoButton.bottomAnchor, constant: 16)
+            uncheckedSendableDemoButton.topAnchor.constraint(equalTo: sendableDemoButton.bottomAnchor, constant: 16),
+
+            serialExecutorDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            serialExecutorDemoButton.topAnchor.constraint(equalTo: uncheckedSendableDemoButton.bottomAnchor, constant: 16)
         ])
     }
 
@@ -164,6 +176,13 @@ class ViewController: UIViewController {
         asyncAwaitButton.addTarget(self, action: #selector(openAsyncAwaitDemo), for: .touchUpInside)
         sendableDemoButton.addTarget(self, action: #selector(openSendableDemo), for: .touchUpInside)
         uncheckedSendableDemoButton.addTarget(self, action: #selector(openUncheckedSendableDemo), for: .touchUpInside)
+        serialExecutorDemoButton.addTarget(self, action: #selector(openSerialExecutorDemo), for: .touchUpInside)
+    }
+
+    @objc private func openSerialExecutorDemo() {
+        let demo = SerialExecutorDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
     }
 
     @objc private func openUncheckedSendableDemo() {
