@@ -27,6 +27,7 @@ final class MainScreenUITests: XCTestCase {
         XCTAssertTrue(app.buttons["topics.operationQueueDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.concurrentPerformDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.asyncAwaitDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.actorDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.sendableDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.uncheckedSendableDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.serialExecutorDemo"].waitForExistence(timeout: 2))
@@ -120,6 +121,16 @@ final class MainScreenUITests: XCTestCase {
         app.buttons["topics.asyncAwaitDemo"].tap()
         XCTAssertTrue(app.buttons["asyncAwait.load"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.staticTexts["asyncAwait.result"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToActorDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.actorDemo"].tap()
+        XCTAssertTrue(app.buttons["actorDemo.add"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["actorDemo.count"].waitForExistence(timeout: 2))
     }
 
     @MainActor

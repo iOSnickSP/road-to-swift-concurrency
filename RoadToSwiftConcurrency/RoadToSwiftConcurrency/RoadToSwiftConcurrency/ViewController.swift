@@ -9,100 +9,38 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    private let gcdDemoButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("GCD Demo", for: .normal)
-        button.accessibilityIdentifier = "topics.gcdDemo"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    // MARK: - GCD (по возрастанию сложности)
+
+    private let gcdDemoButton: UIButton = makeTopicButton(title: "GCD Demo", id: "topics.gcdDemo")
+    private let dispatchGroupButton: UIButton = makeTopicButton(title: "DispatchGroup Demo", id: "topics.dispatchGroupDemo")
+    private let dispatchSemaphoreButton: UIButton = makeTopicButton(title: "DispatchSemaphore Demo", id: "topics.dispatchSemaphoreDemo")
+    private let dispatchWorkItemButton: UIButton = makeTopicButton(title: "DispatchWorkItem Demo", id: "topics.dispatchWorkItemDemo")
+    private let dispatchBarrierButton: UIButton = makeTopicButton(title: "DispatchBarrier Demo", id: "topics.dispatchBarrierDemo")
+    private let dispatchSourceButton: UIButton = makeTopicButton(title: "DispatchSource Demo", id: "topics.dispatchSourceDemo")
+    private let operationQueueButton: UIButton = makeTopicButton(title: "OperationQueue Demo", id: "topics.operationQueueDemo")
+    private let concurrentPerformButton: UIButton = makeTopicButton(title: "concurrentPerform Demo", id: "topics.concurrentPerformDemo")
+
+    // MARK: - Modern Concurrency
+
+    private let asyncAwaitButton: UIButton = makeTopicButton(title: "Async/Await Demo", id: "topics.asyncAwaitDemo")
+    private let actorDemoButton: UIButton = makeTopicButton(title: "Actor Demo", id: "topics.actorDemo")
+    private let sendableDemoButton: UIButton = makeTopicButton(title: "Sendable Demo", id: "topics.sendableDemo")
+    private let uncheckedSendableDemoButton: UIButton = makeTopicButton(title: "@unchecked Sendable Demo", id: "topics.uncheckedSendableDemo")
+    private let serialExecutorDemoButton: UIButton = makeTopicButton(title: "SerialExecutor Demo", id: "topics.serialExecutorDemo")
+
+    private lazy var scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        return sv
     }()
 
-    private let dispatchGroupButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("DispatchGroup Demo", for: .normal)
-        button.accessibilityIdentifier = "topics.dispatchGroupDemo"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    private let dispatchSemaphoreButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("DispatchSemaphore Demo", for: .normal)
-        button.accessibilityIdentifier = "topics.dispatchSemaphoreDemo"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    private let dispatchWorkItemButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("DispatchWorkItem Demo", for: .normal)
-        button.accessibilityIdentifier = "topics.dispatchWorkItemDemo"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    private let dispatchBarrierButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("DispatchBarrier Demo", for: .normal)
-        button.accessibilityIdentifier = "topics.dispatchBarrierDemo"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    private let dispatchSourceButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("DispatchSource Demo", for: .normal)
-        button.accessibilityIdentifier = "topics.dispatchSourceDemo"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    private let operationQueueButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("OperationQueue Demo", for: .normal)
-        button.accessibilityIdentifier = "topics.operationQueueDemo"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    private let concurrentPerformButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("concurrentPerform Demo", for: .normal)
-        button.accessibilityIdentifier = "topics.concurrentPerformDemo"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    private let asyncAwaitButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Async/Await Demo", for: .normal)
-        button.accessibilityIdentifier = "topics.asyncAwaitDemo"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    private let sendableDemoButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Sendable Demo", for: .normal)
-        button.accessibilityIdentifier = "topics.sendableDemo"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    private let uncheckedSendableDemoButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("@unchecked Sendable Demo", for: .normal)
-        button.accessibilityIdentifier = "topics.uncheckedSendableDemo"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    private let serialExecutorDemoButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("SerialExecutor Demo", for: .normal)
-        button.accessibilityIdentifier = "topics.serialExecutorDemo"
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    private lazy var contentStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 16
+        stack.alignment = .center
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
     }()
 
     override func viewDidLoad() {
@@ -113,55 +51,64 @@ class ViewController: UIViewController {
     }
 
     private func setupUI() {
-        view.addSubview(gcdDemoButton)
-        view.addSubview(dispatchGroupButton)
-        view.addSubview(dispatchSemaphoreButton)
-        view.addSubview(dispatchWorkItemButton)
-        view.addSubview(dispatchBarrierButton)
-        view.addSubview(dispatchSourceButton)
-        view.addSubview(operationQueueButton)
-        view.addSubview(concurrentPerformButton)
-        view.addSubview(asyncAwaitButton)
-        view.addSubview(sendableDemoButton)
-        view.addSubview(uncheckedSendableDemoButton)
-        view.addSubview(serialExecutorDemoButton)
+        view.backgroundColor = .systemBackground
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentStack)
+
+        let gcdLabel = makeSectionLabel("GCD")
+        let gcdButtons: [UIButton] = [
+            gcdDemoButton, dispatchGroupButton, dispatchSemaphoreButton, dispatchWorkItemButton,
+            dispatchBarrierButton, dispatchSourceButton, operationQueueButton, concurrentPerformButton
+        ]
+        let gcdStack = makeSectionStack(header: gcdLabel, buttons: gcdButtons)
+
+        let modernLabel = makeSectionLabel("Modern Concurrency")
+        let modernButtons: [UIButton] = [
+            asyncAwaitButton, actorDemoButton, sendableDemoButton,
+            uncheckedSendableDemoButton, serialExecutorDemoButton
+        ]
+        let modernStack = makeSectionStack(header: modernLabel, buttons: modernButtons)
+
+        contentStack.addArrangedSubview(gcdStack)
+        contentStack.addArrangedSubview(modernStack)
+
         NSLayoutConstraint.activate([
-            gcdDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            gcdDemoButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -245),
-
-            dispatchGroupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dispatchGroupButton.topAnchor.constraint(equalTo: gcdDemoButton.bottomAnchor, constant: 16),
-
-            dispatchSemaphoreButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dispatchSemaphoreButton.topAnchor.constraint(equalTo: dispatchGroupButton.bottomAnchor, constant: 16),
-
-            dispatchWorkItemButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dispatchWorkItemButton.topAnchor.constraint(equalTo: dispatchSemaphoreButton.bottomAnchor, constant: 16),
-
-            dispatchBarrierButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dispatchBarrierButton.topAnchor.constraint(equalTo: dispatchWorkItemButton.bottomAnchor, constant: 16),
-
-            dispatchSourceButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            dispatchSourceButton.topAnchor.constraint(equalTo: dispatchBarrierButton.bottomAnchor, constant: 16),
-
-            operationQueueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            operationQueueButton.topAnchor.constraint(equalTo: dispatchSourceButton.bottomAnchor, constant: 16),
-
-            concurrentPerformButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            concurrentPerformButton.topAnchor.constraint(equalTo: operationQueueButton.bottomAnchor, constant: 16),
-
-            asyncAwaitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            asyncAwaitButton.topAnchor.constraint(equalTo: concurrentPerformButton.bottomAnchor, constant: 16),
-
-            sendableDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            sendableDemoButton.topAnchor.constraint(equalTo: asyncAwaitButton.bottomAnchor, constant: 16),
-
-            uncheckedSendableDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            uncheckedSendableDemoButton.topAnchor.constraint(equalTo: sendableDemoButton.bottomAnchor, constant: 16),
-
-            serialExecutorDemoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            serialExecutorDemoButton.topAnchor.constraint(equalTo: uncheckedSendableDemoButton.bottomAnchor, constant: 16)
+            scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+            contentStack.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            contentStack.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            contentStack.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
+            contentStack.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -20)
         ])
+    }
+
+    private func makeSectionLabel(_ text: String) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.font = .preferredFont(forTextStyle: .headline)
+        label.textColor = .secondaryLabel
+        return label
+    }
+
+    private func makeSectionStack(header: UILabel, buttons: [UIButton]) -> UIStackView {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 12
+        stack.alignment = .center
+        stack.addArrangedSubview(header)
+        buttons.forEach { stack.addArrangedSubview($0) }
+        return stack
+    }
+
+    private static func makeTopicButton(title: String, id: String) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setTitle(title, for: .normal)
+        button.accessibilityIdentifier = id
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }
 
     private func setupActions() {
@@ -174,6 +121,7 @@ class ViewController: UIViewController {
         operationQueueButton.addTarget(self, action: #selector(openOperationQueueDemo), for: .touchUpInside)
         concurrentPerformButton.addTarget(self, action: #selector(openConcurrentPerformDemo), for: .touchUpInside)
         asyncAwaitButton.addTarget(self, action: #selector(openAsyncAwaitDemo), for: .touchUpInside)
+        actorDemoButton.addTarget(self, action: #selector(openActorDemo), for: .touchUpInside)
         sendableDemoButton.addTarget(self, action: #selector(openSendableDemo), for: .touchUpInside)
         uncheckedSendableDemoButton.addTarget(self, action: #selector(openUncheckedSendableDemo), for: .touchUpInside)
         serialExecutorDemoButton.addTarget(self, action: #selector(openSerialExecutorDemo), for: .touchUpInside)
@@ -193,6 +141,12 @@ class ViewController: UIViewController {
 
     @objc private func openSendableDemo() {
         let demo = SendableDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
+    }
+
+    @objc private func openActorDemo() {
+        let demo = ActorDemoViewController()
         let nav = UINavigationController(rootViewController: demo)
         present(nav, animated: true)
     }
