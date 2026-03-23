@@ -93,6 +93,7 @@ func loadData() async -> String {
 
 ## Дальше / Next
 
+- `TaskGroup` — параллельный запуск нескольких async-задач / parallel execution of multiple async tasks
 - `Task` — отмена, приоритеты / cancellation, priorities
 - `Actor` — изоляция состояния / state isolation
 

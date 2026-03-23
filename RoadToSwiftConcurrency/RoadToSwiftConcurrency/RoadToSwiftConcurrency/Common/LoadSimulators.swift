@@ -27,4 +27,11 @@ enum LoadSimulators {
         try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
         return "Data loaded: \(Date())"
     }
+
+    /// TaskGroup demo: simulates async resource load. Call with await.
+    static func taskGroupLoadResource(id: Int, delay: TimeInterval? = nil) async -> String {
+        let resolvedDelay = delay ?? Double(id) * 0.5 + 1.0
+        try? await Task.sleep(nanoseconds: UInt64(resolvedDelay * 1_000_000_000))
+        return "Resource \(id)"
+    }
 }

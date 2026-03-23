@@ -69,6 +69,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **Sendable** — что можно передавать между actor'ами / what can cross actor boundaries (исправь код)
 - **@unchecked Sendable** — ручная конформность для thread-safe class / manual conformance for thread-safe class
 - **SerialExecutor** — привязка actor к DispatchQueue / binding actor to custom queue
+- **TaskGroup** — параллельный запуск async-задач / parallel async tasks (withTaskGroup)
 
 ---
 
