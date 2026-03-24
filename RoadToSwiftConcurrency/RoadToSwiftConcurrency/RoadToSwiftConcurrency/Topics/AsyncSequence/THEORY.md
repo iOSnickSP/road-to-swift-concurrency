@@ -54,6 +54,7 @@ func makeAsyncIterator() -> AsyncIterator
 
 ## Дальше / Next
 
+- `TaskCancellation` — тема в проекте: отмена длительного `Task` / in-repo topic: cancelling long-running `Task`
 - `AsyncChannel` / очереди в распределённых системах (вне стандартной библиотеки Swift)
 - Комбинаторы: `map`, `filter` для AsyncSequence (Swift Algorithms)
 

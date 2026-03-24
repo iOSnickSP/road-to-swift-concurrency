@@ -72,6 +72,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **TaskGroup** — параллельный запуск async-задач / parallel async tasks (withTaskGroup)
 - **async let** — фиксированное число параллельных async-вызовов / fixed parallel async calls
 - **AsyncSequence** — асинхронный поток значений, `for await` / async stream, `for await`
+- **Task cancellation** — кооперативная отмена `Task`, `checkCancellation` / cooperative `Task` cancellation
 
 ---
 

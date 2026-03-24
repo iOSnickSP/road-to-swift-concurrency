@@ -30,6 +30,7 @@ final class MainScreenUITests: XCTestCase {
         XCTAssertTrue(app.buttons["topics.taskGroupDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.asyncLetDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.asyncSequenceDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.taskCancellationDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.actorDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.sendableDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.uncheckedSendableDemo"].waitForExistence(timeout: 2))
@@ -154,6 +155,16 @@ final class MainScreenUITests: XCTestCase {
         app.buttons["topics.asyncSequenceDemo"].tap()
         XCTAssertTrue(app.buttons["asyncSequence.start"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.staticTexts["asyncSequence.status"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToTaskCancellationDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.taskCancellationDemo"].tap()
+        XCTAssertTrue(app.buttons["taskCancellation.start"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["taskCancellation.cancel"].waitForExistence(timeout: 2))
     }
 
     @MainActor
