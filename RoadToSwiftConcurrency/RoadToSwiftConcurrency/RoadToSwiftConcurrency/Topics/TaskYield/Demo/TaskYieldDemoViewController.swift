@@ -105,12 +105,29 @@ final class TaskYieldDemoViewController: UIViewController {
         statusLabel.text = "Running..."
         progressLabel.text = "0 / \(totalSteps)"
 
-        // TASK: Topics/TaskYield/THEORY.md — Task { @MainActor in … }, цикл с try Task.checkCancellation(),
-        // await Task.yield(), sleep, обновление progress; Completed / Cancelled на status.
+        workTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            await self.runYieldLoop()
+        }
+    }
+
+    /// `yield` — уступка планировщику; `sleep` — пауза для UI/тестов (в «чистом» yield-only цикле sleep не обязателен).
+    /// `yield` yields to the scheduler; `sleep` gives UI/tests time (optional in a yield-only loop).
+    private func runYieldLoop() async {
+        do {
+            for step in 1...totalSteps {
+                try Task.checkCancellation()
+                await Task.yield()
+                try await Task.sleep(nanoseconds: 100_000_000)
+                progressLabel.text = "\(step) / \(totalSteps)"
+            }
+            statusLabel.text = "Completed"
+        } catch {
+            statusLabel.text = "Cancelled"
+        }
     }
 
     @objc private func cancelTapped() {
         workTask?.cancel()
-        // TASK: отмена workTask
     }
 }
