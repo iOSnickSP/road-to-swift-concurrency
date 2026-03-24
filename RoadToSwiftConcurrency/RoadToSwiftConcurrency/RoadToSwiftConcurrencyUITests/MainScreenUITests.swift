@@ -33,6 +33,7 @@ final class MainScreenUITests: XCTestCase {
         XCTAssertTrue(app.buttons["topics.taskCancellationDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.withTaskCancellationHandlerDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.taskYieldDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.taskDetachedDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.actorDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.sendableDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.uncheckedSendableDemo"].waitForExistence(timeout: 2))
@@ -187,6 +188,17 @@ final class MainScreenUITests: XCTestCase {
         app.buttons["topics.taskYieldDemo"].tap()
         XCTAssertTrue(app.buttons["taskYield.start"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["taskYield.cancel"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToTaskDetachedDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.taskDetachedDemo"].tap()
+        XCTAssertTrue(app.buttons["taskDetached.start"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["taskDetached.cancelParent"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["taskDetached.cancelDetached"].waitForExistence(timeout: 2))
     }
 
     @MainActor

@@ -46,8 +46,8 @@ In UI demos a **short `sleep`** after `yield` is sometimes added so labels updat
 
 ## Дальше / Next
 
+- Тема в проекте: **`TaskDetached`** — [`../TaskDetached/THEORY.md`](../TaskDetached/THEORY.md) — `Task.detached`, отмена не наследуется от родителя
 - `TaskPriority` / приоритеты задач
-- `Task.detached` — задача вне иерархии отмены родителя
 
 ---
 

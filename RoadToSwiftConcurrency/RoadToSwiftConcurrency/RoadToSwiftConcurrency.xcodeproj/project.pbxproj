@@ -39,6 +39,7 @@
 				Topics/AsyncLet/THEORY.md,
 				Topics/AsyncSequence/THEORY.md,
 				Topics/TaskCancellation/THEORY.md,
+				Topics/TaskDetached/THEORY.md,
 				Topics/WithTaskCancellationHandler/THEORY.md,
 				Topics/ConcurrentPerform/THEORY.md,
 				Topics/DispatchBarrier/THEORY.md,
