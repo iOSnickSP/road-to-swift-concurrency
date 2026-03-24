@@ -60,6 +60,11 @@ final class TaskDetachedDemoViewController: UIViewController {
     private let parentSteps = 5
     private let detachedSteps = 8
 
+    private enum Timing {
+        static let parentStep = 120_000_000 as UInt64
+        static let detachedStep = 100_000_000 as UInt64
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Task.detached Demo"
@@ -79,9 +84,13 @@ final class TaskDetachedDemoViewController: UIViewController {
     }
 
     @objc private func dismissTapped() {
+        cancelRunningTasks()
+        dismiss(animated: true)
+    }
+
+    private func cancelRunningTasks() {
         parentTask?.cancel()
         detachedTask?.cancel()
-        dismiss(animated: true)
     }
 
     private func setupUI() {
@@ -118,23 +127,53 @@ final class TaskDetachedDemoViewController: UIViewController {
     }
 
     @objc private func startTapped() {
-        parentTask?.cancel()
-        detachedTask?.cancel()
+        cancelRunningTasks()
 
         parentStatusLabel.text = "Parent: Running"
         detachedProgressLabel.text = "Detached: 0/\(detachedSteps)"
 
-        // TASK: Topics/TaskDetached/THEORY.md — parent Task на MainActor, Task.detached с циклом и MainActor.run для лейбла;
-        // отмена родителя не отменяет detached по умолчанию — см. тесты.
+        // Сначала detached — он не дочерний к родителю; отмена parentTask на него не действует.
+        // Start detached first — it is not a child; cancelling parentTask does not cancel it.
+        let detachedTotal = detachedSteps
+        detachedTask = Task.detached(priority: .userInitiated) { [weak self] in
+            do {
+                for step in 1...detachedTotal {
+                    try Task.checkCancellation()
+                    try await Task.sleep(nanoseconds: Timing.detachedStep)
+                    await MainActor.run { [weak self] in
+                        self?.detachedProgressLabel.text = "Detached: \(step)/\(detachedTotal)"
+                    }
+                }
+                await MainActor.run { [weak self] in
+                    self?.detachedProgressLabel.text = "Detached: Done"
+                }
+            } catch {
+                await MainActor.run { [weak self] in
+                    self?.detachedProgressLabel.text = "Detached: Cancelled"
+                }
+            }
+        }
+
+        parentTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            do {
+                for step in 1...self.parentSteps {
+                    try Task.checkCancellation()
+                    try await Task.sleep(nanoseconds: Timing.parentStep)
+                    self.parentStatusLabel.text = "Parent: \(step)/\(self.parentSteps)"
+                }
+                self.parentStatusLabel.text = "Parent: Completed"
+            } catch {
+                self.parentStatusLabel.text = "Parent: Cancelled"
+            }
+        }
     }
 
     @objc private func cancelParentTapped() {
         parentTask?.cancel()
-        // TASK: только родитель
     }
 
     @objc private func cancelDetachedTapped() {
         detachedTask?.cancel()
-        // TASK: только detached
     }
 }
