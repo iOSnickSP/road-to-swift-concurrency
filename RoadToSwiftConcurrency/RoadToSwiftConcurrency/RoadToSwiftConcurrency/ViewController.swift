@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     private let asyncAwaitButton: UIButton = makeTopicButton(title: "Async/Await Demo", id: "topics.asyncAwaitDemo")
     private let taskGroupDemoButton: UIButton = makeTopicButton(title: "TaskGroup Demo", id: "topics.taskGroupDemo")
     private let asyncLetDemoButton: UIButton = makeTopicButton(title: "async let Demo", id: "topics.asyncLetDemo")
+    private let asyncSequenceDemoButton: UIButton = makeTopicButton(title: "AsyncSequence Demo", id: "topics.asyncSequenceDemo")
     private let actorDemoButton: UIButton = makeTopicButton(title: "Actor Demo", id: "topics.actorDemo")
     private let sendableDemoButton: UIButton = makeTopicButton(title: "Sendable Demo", id: "topics.sendableDemo")
     private let uncheckedSendableDemoButton: UIButton = makeTopicButton(title: "@unchecked Sendable Demo", id: "topics.uncheckedSendableDemo")
@@ -66,8 +67,8 @@ class ViewController: UIViewController {
 
         let modernLabel = makeSectionLabel("Modern Concurrency")
         let modernButtons: [UIButton] = [
-            asyncAwaitButton, taskGroupDemoButton, asyncLetDemoButton, actorDemoButton, sendableDemoButton,
-            uncheckedSendableDemoButton, serialExecutorDemoButton
+            asyncAwaitButton, taskGroupDemoButton, asyncLetDemoButton, asyncSequenceDemoButton, actorDemoButton,
+            sendableDemoButton, uncheckedSendableDemoButton, serialExecutorDemoButton
         ]
         let modernStack = makeSectionStack(header: modernLabel, buttons: modernButtons)
 
@@ -125,6 +126,7 @@ class ViewController: UIViewController {
         asyncAwaitButton.addTarget(self, action: #selector(openAsyncAwaitDemo), for: .touchUpInside)
         taskGroupDemoButton.addTarget(self, action: #selector(openTaskGroupDemo), for: .touchUpInside)
         asyncLetDemoButton.addTarget(self, action: #selector(openAsyncLetDemo), for: .touchUpInside)
+        asyncSequenceDemoButton.addTarget(self, action: #selector(openAsyncSequenceDemo), for: .touchUpInside)
         actorDemoButton.addTarget(self, action: #selector(openActorDemo), for: .touchUpInside)
         sendableDemoButton.addTarget(self, action: #selector(openSendableDemo), for: .touchUpInside)
         uncheckedSendableDemoButton.addTarget(self, action: #selector(openUncheckedSendableDemo), for: .touchUpInside)
@@ -163,6 +165,12 @@ class ViewController: UIViewController {
 
     @objc private func openAsyncLetDemo() {
         let demo = AsyncLetDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
+    }
+
+    @objc private func openAsyncSequenceDemo() {
+        let demo = AsyncSequenceDemoViewController()
         let nav = UINavigationController(rootViewController: demo)
         present(nav, animated: true)
     }

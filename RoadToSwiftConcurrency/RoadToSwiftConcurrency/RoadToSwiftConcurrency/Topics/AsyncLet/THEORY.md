@@ -58,7 +58,7 @@ let (x, y) = try await (a, b)
 
 ## Дальше / Next
 
-- `AsyncSequence` — поток значений с `for await`
+- `AsyncSequence` — тема в проекте: `StepsAsyncSequence` + `for await` / in-repo topic: `StepsAsyncSequence` + `for await`
 - Отмена родительского `Task` — дочерние `async let` отменяются вместе с ним
 
 ---

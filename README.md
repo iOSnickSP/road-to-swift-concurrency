@@ -71,6 +71,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **SerialExecutor** — привязка actor к DispatchQueue / binding actor to custom queue
 - **TaskGroup** — параллельный запуск async-задач / parallel async tasks (withTaskGroup)
 - **async let** — фиксированное число параллельных async-вызовов / fixed parallel async calls
+- **AsyncSequence** — асинхронный поток значений, `for await` / async stream, `for await`
 
 ---
 
