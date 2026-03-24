@@ -61,7 +61,10 @@ final class TaskPriorityDemoViewController: UIViewController {
     }()
 
     private let steps = 8
-    private let stepSleepNs: UInt64 = 100_000_000
+
+    private enum Timing {
+        static let stepSleep: UInt64 = 100_000_000
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,10 +86,16 @@ final class TaskPriorityDemoViewController: UIViewController {
     }
 
     @objc private func dismissTapped() {
+        cancelAllTasks()
+        dismiss(animated: true)
+    }
+
+    /// Не вызывать из `deinit` — изоляция MainActor.
+    /// Do not call from `deinit` — MainActor isolation.
+    private func cancelAllTasks() {
         workTask?.cancel()
         highPriorityTask?.cancel()
         lowPriorityTask?.cancel()
-        dismiss(animated: true)
     }
 
     private func setupUI() {
@@ -123,22 +132,58 @@ final class TaskPriorityDemoViewController: UIViewController {
     }
 
     @objc private func startTapped() {
-        workTask?.cancel()
-        highPriorityTask?.cancel()
-        lowPriorityTask?.cancel()
+        cancelAllTasks()
 
         statusLabel.text = "Running..."
         highProgressLabel.text = "High: 0/\(steps)"
         lowProgressLabel.text = "Low: 0/\(steps)"
 
-        // TASK: Topics/TaskPriority/THEORY.md — два Task(priority: .high / .low), циклы 1…steps,
-        // координирующий Task ждёт оба; Completed, High: Done, Low: Done; Cancel отменяет все три.
+        highPriorityTask = Task(priority: .high) { [weak self] in
+            guard let self else { return }
+            try await self.runPriorityLoop(prefix: "High") { self.highProgressLabel.text = $0 }
+        }
+        lowPriorityTask = Task(priority: .low) { [weak self] in
+            guard let self else { return }
+            try await self.runPriorityLoop(prefix: "Low") { self.lowProgressLabel.text = $0 }
+        }
+
+        workTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            guard let highTask = self.highPriorityTask, let lowTask = self.lowPriorityTask else { return }
+            do {
+                // Параллельное ожидание обоих Task — оба уже запущены с разным priority.
+                // Parallel await — both tasks already running with different priorities.
+                async let highResult = try highTask.value
+                async let lowResult = try lowTask.value
+                _ = try await (highResult, lowResult)
+                self.statusLabel.text = "Completed"
+            } catch {
+                self.statusLabel.text = "Cancelled"
+                self.applyCancelledIfNotDone(label: self.highProgressLabel, prefix: "High")
+                self.applyCancelledIfNotDone(label: self.lowProgressLabel, prefix: "Low")
+            }
+        }
+    }
+
+    private func applyCancelledIfNotDone(label: UILabel, prefix: String) {
+        if !(label.text ?? "").hasSuffix("Done") {
+            label.text = "\(prefix): Cancelled"
+        }
+    }
+
+    private func runPriorityLoop(
+        prefix: String,
+        setText: @escaping (String) -> Void
+    ) async throws {
+        for step in 1...steps {
+            try Task.checkCancellation()
+            try await Task.sleep(nanoseconds: Timing.stepSleep)
+            setText("\(prefix): \(step)/\(steps)")
+        }
+        setText("\(prefix): Done")
     }
 
     @objc private func cancelTapped() {
-        workTask?.cancel()
-        highPriorityTask?.cancel()
-        lowPriorityTask?.cancel()
-        // TASK: надёжно отменить координирующий и оба дочерних Task
+        cancelAllTasks()
     }
 }
