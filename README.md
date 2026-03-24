@@ -73,6 +73,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **async let** — фиксированное число параллельных async-вызовов / fixed parallel async calls
 - **AsyncSequence** — асинхронный поток значений, `for await` / async stream, `for await`
 - **Task cancellation** — кооперативная отмена `Task`, `checkCancellation` / cooperative `Task` cancellation
+- **`withTaskCancellationHandler`** — синхронный `onCancel` для cleanup при отмене / synchronous `onCancel` for cleanup when cancelled
 
 ---
 

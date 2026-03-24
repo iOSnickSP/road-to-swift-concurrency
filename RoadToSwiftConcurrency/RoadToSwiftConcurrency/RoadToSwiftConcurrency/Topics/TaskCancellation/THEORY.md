@@ -60,7 +60,7 @@ Handle cancellation: `catch CancellationError` or check `Task.isCancelled` after
 
 ## Дальше / Next
 
-- `withTaskCancellationHandler` — выполнить код при отмене (закрыть файл, отменить URLSession task)
+- Тема в проекте: **`WithTaskCancellationHandler`** — [`../WithTaskCancellationHandler/THEORY.md`](../WithTaskCancellationHandler/THEORY.md) — `withTaskCancellationHandler`, cleanup в `onCancel` (закрыть файл, отменить URLSession task)
 - `Task.yield()` — уступить поток
 
 ---
