@@ -70,6 +70,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **@unchecked Sendable** — ручная конформность для thread-safe class / manual conformance for thread-safe class
 - **SerialExecutor** — привязка actor к DispatchQueue / binding actor to custom queue
 - **TaskGroup** — параллельный запуск async-задач / parallel async tasks (withTaskGroup)
+- **async let** — фиксированное число параллельных async-вызовов / fixed parallel async calls
 
 ---
 

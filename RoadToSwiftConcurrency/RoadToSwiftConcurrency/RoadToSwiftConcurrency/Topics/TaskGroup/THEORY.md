@@ -58,8 +58,8 @@ let results = try await withThrowingTaskGroup(of: String.self) { group in
 
 ## Дальше / Next
 
+- `async let` — тема в проекте: три параллельные загрузки без TaskGroup / in-repo topic: three parallel loads without TaskGroup
 - `AsyncSequence` — асинхронная итерация по потоку данных
-- `async let` — упрощённый параллельный запуск для фиксированного числа задач
 
 ---
 

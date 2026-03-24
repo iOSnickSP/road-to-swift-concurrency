@@ -35,6 +35,7 @@
 			membershipExceptions = (
 				Info.plist,
 				Topics/AsyncAwait/THEORY.md,
+				Topics/AsyncLet/THEORY.md,
 				Topics/ConcurrentPerform/THEORY.md,
 				Topics/DispatchBarrier/THEORY.md,
 				Topics/DispatchGroup/THEORY.md,
