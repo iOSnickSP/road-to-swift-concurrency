@@ -52,6 +52,7 @@
 				Topics/Sendable/THEORY.md,
 				Topics/SerialExecutor/THEORY.md,
 				Topics/TaskGroup/THEORY.md,
+				Topics/TaskPriority/THEORY.md,
 				Topics/TaskYield/THEORY.md,
 				Topics/UncheckedSendable/THEORY.md,
 			);

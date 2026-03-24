@@ -41,8 +41,8 @@ Task.detached(priority: TaskPriority? = nil, operation: @Sendable () async -> Su
 
 ## Дальше / Next
 
-- `TaskPriority` — явный приоритет у `Task` / `Task.detached`
-- `TaskGroup` — структурированный параллелизм с отменой «пачкой»
+- Тема в проекте: **`TaskPriority`** — [`../TaskPriority/THEORY.md`](../TaskPriority/THEORY.md) — явный приоритет у `Task` / `Task.detached`
+- `TaskGroup` — структурированный параллелизм с отменой «пачкой» (тема в проекте: [`../TaskGroup/THEORY.md`](../TaskGroup/THEORY.md))
 
 ---
 
