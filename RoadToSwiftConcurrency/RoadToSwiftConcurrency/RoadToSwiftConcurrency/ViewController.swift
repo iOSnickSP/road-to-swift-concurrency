@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     private let asyncSequenceDemoButton: UIButton = makeTopicButton(title: "AsyncSequence Demo", id: "topics.asyncSequenceDemo")
     private let taskCancellationDemoButton: UIButton = makeTopicButton(title: "Task Cancellation Demo", id: "topics.taskCancellationDemo")
     private let withTaskCancellationHandlerDemoButton: UIButton = makeTopicButton(title: "withTaskCancellationHandler Demo", id: "topics.withTaskCancellationHandlerDemo")
+    private let taskYieldDemoButton: UIButton = makeTopicButton(title: "Task.yield Demo", id: "topics.taskYieldDemo")
     private let actorDemoButton: UIButton = makeTopicButton(title: "Actor Demo", id: "topics.actorDemo")
     private let sendableDemoButton: UIButton = makeTopicButton(title: "Sendable Demo", id: "topics.sendableDemo")
     private let uncheckedSendableDemoButton: UIButton = makeTopicButton(title: "@unchecked Sendable Demo", id: "topics.uncheckedSendableDemo")
@@ -70,7 +71,7 @@ class ViewController: UIViewController {
         let modernLabel = makeSectionLabel("Modern Concurrency")
         let modernButtons: [UIButton] = [
             asyncAwaitButton, taskGroupDemoButton, asyncLetDemoButton, asyncSequenceDemoButton,
-            taskCancellationDemoButton, withTaskCancellationHandlerDemoButton, actorDemoButton, sendableDemoButton, uncheckedSendableDemoButton,
+            taskCancellationDemoButton, withTaskCancellationHandlerDemoButton, taskYieldDemoButton, actorDemoButton, sendableDemoButton, uncheckedSendableDemoButton,
             serialExecutorDemoButton
         ]
         let modernStack = makeSectionStack(header: modernLabel, buttons: modernButtons)
@@ -132,6 +133,7 @@ class ViewController: UIViewController {
         asyncSequenceDemoButton.addTarget(self, action: #selector(openAsyncSequenceDemo), for: .touchUpInside)
         taskCancellationDemoButton.addTarget(self, action: #selector(openTaskCancellationDemo), for: .touchUpInside)
         withTaskCancellationHandlerDemoButton.addTarget(self, action: #selector(openWithTaskCancellationHandlerDemo), for: .touchUpInside)
+        taskYieldDemoButton.addTarget(self, action: #selector(openTaskYieldDemo), for: .touchUpInside)
         actorDemoButton.addTarget(self, action: #selector(openActorDemo), for: .touchUpInside)
         sendableDemoButton.addTarget(self, action: #selector(openSendableDemo), for: .touchUpInside)
         uncheckedSendableDemoButton.addTarget(self, action: #selector(openUncheckedSendableDemo), for: .touchUpInside)
@@ -188,6 +190,12 @@ class ViewController: UIViewController {
 
     @objc private func openWithTaskCancellationHandlerDemo() {
         let demo = WithTaskCancellationHandlerDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
+    }
+
+    @objc private func openTaskYieldDemo() {
+        let demo = TaskYieldDemoViewController()
         let nav = UINavigationController(rootViewController: demo)
         present(nav, animated: true)
     }

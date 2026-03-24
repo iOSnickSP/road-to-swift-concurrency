@@ -50,7 +50,7 @@ await withTaskCancellationHandler {
 
 ## Дальше / Next
 
-- `Task.yield()` — уступить исполнение, дать другим задачам прогресс
+- Тема в проекте: **`TaskYield`** — [`../TaskYield/THEORY.md`](../TaskYield/THEORY.md) — `await Task.yield()`, уступка планировщику
 - Отмена `URLSession` / закрытие файлов в реальном коде
 
 ---

@@ -51,6 +51,7 @@
 				Topics/Sendable/THEORY.md,
 				Topics/SerialExecutor/THEORY.md,
 				Topics/TaskGroup/THEORY.md,
+				Topics/TaskYield/THEORY.md,
 				Topics/UncheckedSendable/THEORY.md,
 			);
 			target = 0162FF152F5C705F00955193 /* RoadToSwiftConcurrency */;

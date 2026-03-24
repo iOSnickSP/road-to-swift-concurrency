@@ -74,6 +74,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **AsyncSequence** — асинхронный поток значений, `for await` / async stream, `for await`
 - **Task cancellation** — кооперативная отмена `Task`, `checkCancellation` / cooperative `Task` cancellation
 - **`withTaskCancellationHandler`** — синхронный `onCancel` для cleanup при отмене / synchronous `onCancel` for cleanup when cancelled
+- **`Task.yield`** — уступка планировщику в async-цикле / yielding to the scheduler in an async loop
 
 ---
 
