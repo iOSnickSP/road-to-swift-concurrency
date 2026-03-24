@@ -98,8 +98,13 @@ final class AsyncLetDemoViewController: UIViewController {
         resultLabel.text = ""
 
         Task {
-            // TASK: три async let для id 0, 1, 2 и SimulatedNetworkService.fetchResource(id:)
-            // TASK: await (кортеж) — затем progressView.setProgress(1, ...), status "Done", resultLabel с объединённым текстом
+            async let r0 = SimulatedNetworkService.fetchResource(id: 0)
+            async let r1 = SimulatedNetworkService.fetchResource(id: 1)
+            async let r2 = SimulatedNetworkService.fetchResource(id: 2)
+            let (a, b, c) = await (r0, r1, r2)
+            progressView.setProgress(1, animated: true)
+            statusLabel.text = "Done"
+            resultLabel.text = [a, b, c].joined(separator: ", ")
             loadButton.isEnabled = true
         }
     }
