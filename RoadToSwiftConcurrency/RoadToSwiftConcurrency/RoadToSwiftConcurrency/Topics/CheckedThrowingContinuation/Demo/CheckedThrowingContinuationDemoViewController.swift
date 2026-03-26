@@ -30,6 +30,12 @@ private enum LegacyResultLoader {
     }
 }
 
+extension LegacyResultLoader.SimulatedFailure: LocalizedError {
+    var errorDescription: String? {
+        "Simulated backend failure (backendSaidNo)"
+    }
+}
+
 @MainActor
 final class CheckedThrowingContinuationDemoViewController: UIViewController {
 
@@ -93,16 +99,36 @@ final class CheckedThrowingContinuationDemoViewController: UIViewController {
         dismiss(animated: true)
     }
 
-    /// TASK: оберни LegacyResultLoader в withCheckedThrowingContinuation —
-    /// один resume(returning:) или resume(throwing:).
-    /// TASK: wrap LegacyResultLoader in withCheckedThrowingContinuation —
-    /// one resume(returning:) or resume(throwing:).
     private func fetchBridged(shouldFail: Bool) async throws -> String {
-        ""
+        try await withCheckedThrowingContinuation { continuation in
+            LegacyResultLoader.loadText(shouldFail: shouldFail) { result in
+                switch result {
+                case .success(let value):
+                    continuation.resume(returning: value)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
     }
 
     @objc private func fetchTapped() {
-        // TASK: Task { @MainActor in … }, try await fetchBridged(shouldFail:), обработка catch, status/result
+        let shouldFail = failSwitch.isOn
+        Task { @MainActor in
+            fetchButton.isEnabled = false
+            defer { fetchButton.isEnabled = true }
+
+            statusLabel.text = "Running…"
+            resultLabel.text = "…"
+            do {
+                let text = try await fetchBridged(shouldFail: shouldFail)
+                resultLabel.text = text
+                statusLabel.text = "Done"
+            } catch {
+                resultLabel.text = error.localizedDescription
+                statusLabel.text = "Failed"
+            }
+        }
     }
 
     private func setupUI() {
