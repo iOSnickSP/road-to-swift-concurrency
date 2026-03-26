@@ -52,7 +52,7 @@ Task { @MainActor in
 
 ## Дальше / Next
 
-- `ContinuousClock` / `Duration` — измерение интервалов и сон без привязки к календарю
+- Тема в проекте: **ContinuousClock** — [`../ContinuousClock/THEORY.md`](../ContinuousClock/THEORY.md) (`Duration`, монотонные часы, `Task.sleep(for:clock:)`)
 - **AsyncStream** — мост из колбэков в async
 
 ---

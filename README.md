@@ -78,6 +78,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **`Task.detached`** — задача вне иерархии родителя, отмена отдельно / task outside parent hierarchy, separate cancellation
 - **`TaskPriority`** — приоритет задач (`.high` / `.low` и др.) / task priorities (`.high` / `.low`, etc.)
 - **`MainActor`** — глобальный актор для UI, `MainActor.run` / global actor for UI, `MainActor.run`
+- **`ContinuousClock`** — монотонное время и `Duration`, `Task.sleep(for:clock:)` / monotonic time, `Duration`, `Task.sleep(for:clock:)`
 
 ---
 

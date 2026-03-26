@@ -36,6 +36,7 @@ final class MainScreenUITests: XCTestCase {
         XCTAssertTrue(app.buttons["topics.taskDetachedDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.taskPriorityDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.mainActorDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.continuousClockDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.actorDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.sendableDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.uncheckedSendableDemo"].waitForExistence(timeout: 2))
@@ -221,6 +222,16 @@ final class MainScreenUITests: XCTestCase {
         app.buttons["topics.mainActorDemo"].tap()
         XCTAssertTrue(app.buttons["mainActor.start"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["mainActor.cancel"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToContinuousClockDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.continuousClockDemo"].tap()
+        XCTAssertTrue(app.buttons["continuousClock.start"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["continuousClock.cancel"].waitForExistence(timeout: 2))
     }
 
     @MainActor

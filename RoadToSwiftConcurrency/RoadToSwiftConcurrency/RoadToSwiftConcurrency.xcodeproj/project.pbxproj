@@ -42,6 +42,7 @@
 				Topics/TaskDetached/THEORY.md,
 				Topics/WithTaskCancellationHandler/THEORY.md,
 				Topics/ConcurrentPerform/THEORY.md,
+				Topics/ContinuousClock/THEORY.md,
 				Topics/DispatchBarrier/THEORY.md,
 				Topics/DispatchGroup/THEORY.md,
 				Topics/DispatchSemaphore/THEORY.md,
