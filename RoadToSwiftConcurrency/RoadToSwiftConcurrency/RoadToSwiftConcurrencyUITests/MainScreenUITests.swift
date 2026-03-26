@@ -43,6 +43,7 @@ final class MainScreenUITests: XCTestCase {
         XCTAssertTrue(app.buttons["topics.serialExecutorDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.checkedContinuationDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.checkedThrowingContinuationDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.asyncStreamDemo"].waitForExistence(timeout: 2))
     }
 
     @MainActor
@@ -294,5 +295,15 @@ final class MainScreenUITests: XCTestCase {
         app.buttons["topics.checkedThrowingContinuationDemo"].tap()
         XCTAssertTrue(app.buttons["checkedThrowingContinuation.fetch"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.staticTexts["checkedThrowingContinuation.status"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToAsyncStreamDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.asyncStreamDemo"].tap()
+        XCTAssertTrue(app.buttons["asyncStream.start"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["asyncStream.status"].waitForExistence(timeout: 2))
     }
 }

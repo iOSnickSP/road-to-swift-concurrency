@@ -39,6 +39,7 @@ class ViewController: UIViewController {
     private let serialExecutorDemoButton: UIButton = makeTopicButton(title: "SerialExecutor Demo", id: "topics.serialExecutorDemo")
     private let checkedContinuationDemoButton: UIButton = makeTopicButton(title: "CheckedContinuation Demo", id: "topics.checkedContinuationDemo")
     private let checkedThrowingContinuationDemoButton: UIButton = makeTopicButton(title: "CheckedThrowingContinuation Demo", id: "topics.checkedThrowingContinuationDemo")
+    private let asyncStreamDemoButton: UIButton = makeTopicButton(title: "AsyncStream Demo", id: "topics.asyncStreamDemo")
 
     private lazy var scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -77,8 +78,11 @@ class ViewController: UIViewController {
         let modernLabel = makeSectionLabel("Modern Concurrency")
         let modernButtons: [UIButton] = [
             asyncAwaitButton, taskGroupDemoButton, asyncLetDemoButton, asyncSequenceDemoButton,
-            taskCancellationDemoButton, withTaskCancellationHandlerDemoButton, taskYieldDemoButton, taskDetachedDemoButton, taskPriorityDemoButton, mainActorDemoButton, continuousClockDemoButton, actorDemoButton,             sendableDemoButton, uncheckedSendableDemoButton,
-            serialExecutorDemoButton, checkedContinuationDemoButton, checkedThrowingContinuationDemoButton
+            taskCancellationDemoButton, withTaskCancellationHandlerDemoButton, taskYieldDemoButton,
+            taskDetachedDemoButton, taskPriorityDemoButton, mainActorDemoButton, continuousClockDemoButton,
+            actorDemoButton, sendableDemoButton, uncheckedSendableDemoButton,
+            serialExecutorDemoButton, checkedContinuationDemoButton, checkedThrowingContinuationDemoButton,
+            asyncStreamDemoButton
         ]
         let modernStack = makeSectionStack(header: modernLabel, buttons: modernButtons)
 
@@ -150,6 +154,13 @@ class ViewController: UIViewController {
         serialExecutorDemoButton.addTarget(self, action: #selector(openSerialExecutorDemo), for: .touchUpInside)
         checkedContinuationDemoButton.addTarget(self, action: #selector(openCheckedContinuationDemo), for: .touchUpInside)
         checkedThrowingContinuationDemoButton.addTarget(self, action: #selector(openCheckedThrowingContinuationDemo), for: .touchUpInside)
+        asyncStreamDemoButton.addTarget(self, action: #selector(openAsyncStreamDemo), for: .touchUpInside)
+    }
+
+    @objc private func openAsyncStreamDemo() {
+        let demo = AsyncStreamDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
     }
 
     @objc private func openCheckedThrowingContinuationDemo() {

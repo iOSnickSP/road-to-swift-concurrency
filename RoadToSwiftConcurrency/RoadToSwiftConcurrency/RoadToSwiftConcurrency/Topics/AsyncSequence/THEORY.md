@@ -85,6 +85,12 @@ func makeAsyncIterator() -> AsyncIterator
 
 ---
 
+## Дальше / Next
+
+- **`AsyncStream`** — поток из колбэков через **`continuation.yield`** — [`../AsyncStream/THEORY.md`](../AsyncStream/THEORY.md)
+
+---
+
 ## Проверка / Verification
 
 Запусти `AsyncSequenceDemoUITests.testAsyncSequenceCompletesWithSteps`.

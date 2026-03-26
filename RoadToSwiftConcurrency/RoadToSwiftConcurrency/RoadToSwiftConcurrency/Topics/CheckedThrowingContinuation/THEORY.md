@@ -40,6 +40,7 @@ func load() async throws -> String {
 
 ## Дальше / Next
 
+- **`AsyncStream`** — много значений, **`yield`** / **`finish`** — [`../AsyncStream/THEORY.md`](../AsyncStream/THEORY.md)
 - **`AsyncThrowingStream`** — много значений + ошибки / many values + errors
 - Тема **`AsyncSequence`** в проекте — [`../AsyncSequence/THEORY.md`](../AsyncSequence/THEORY.md)
 

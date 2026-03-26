@@ -82,6 +82,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **`ContinuousClock`** — монотонное время и `Duration`, `Task.sleep(for:clock:)` / monotonic time, `Duration`, `Task.sleep(for:clock:)`
 - **`CheckedContinuation`** — колбэк → `async` через `withCheckedContinuation` / callback → `async` via `withCheckedContinuation`
 - **`CheckedThrowingContinuation`** — `Result` в колбэке → `async throws` через `withCheckedThrowingContinuation` / `Result` callback → `async throws` via `withCheckedThrowingContinuation`
+- **`AsyncStream`** — колбэки → `AsyncStream`, `yield`/`finish`, `for await` / callbacks → `AsyncStream`, `yield`/`finish`, `for await`
 
 ---
 
