@@ -98,7 +98,7 @@ final class AsyncLetDemoViewController: UIViewController {
         resultLabel.text = ""
 
         Task {
-            // TASK: три async let для id 0, 1, 2 и LoadSimulators.taskGroupLoadResource(id:)
+            // TASK: три async let для id 0, 1, 2 и SimulatedNetworkService.fetchResource(id:)
             // TASK: await (кортеж) — затем progressView.setProgress(1, ...), status "Done", resultLabel с объединённым текстом
             loadButton.isEnabled = true
         }

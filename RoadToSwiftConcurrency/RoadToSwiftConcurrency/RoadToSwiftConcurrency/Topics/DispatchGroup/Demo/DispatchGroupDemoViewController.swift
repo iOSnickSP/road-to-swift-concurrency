@@ -104,6 +104,6 @@ final class DispatchGroupDemoViewController: UIViewController {
     /// Симулирует загрузку ресурса. Вызывать только из фонового потока.
     /// Simulates resource load. Call only from background thread.
     private func loadResource(id: Int) -> String {
-        LoadSimulators.dispatchGroupLoadResource(id: id)
+        SimulatedNetworkService.fetchResourceSync(id: id)
     }
 }

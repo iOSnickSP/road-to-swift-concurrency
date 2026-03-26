@@ -90,6 +90,6 @@ final class GCDDemoViewController: UIViewController {
     /// Симулирует загрузку данных (2 секунды). Вызывать только из фонового потока.
     /// Simulates data load (2 sec). Call only from background thread.
     private func simulateLoad() -> String {
-        LoadSimulators.gcdSimulateLoad(delay: 2)
+        SimulatedNetworkService.fetchTextSync(delay: 2)
     }
 }

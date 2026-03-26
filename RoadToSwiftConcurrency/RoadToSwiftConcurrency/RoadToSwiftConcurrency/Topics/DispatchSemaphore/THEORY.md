@@ -77,9 +77,9 @@ group.notify(queue: .main) {
 
 Implement demo: load **5 resources**, but **max 2 concurrent**. ProgressView (1/5, 2/5, ..., 5/5). When all complete — show result. Button "Load All".
 
-Используй `LoadSimulators.dispatchGroupLoadResource(id:)` для id 0..<5.
+Используй `SimulatedNetworkService.fetchResourceSync(id:)` для id 0..<5.
 
-Use `LoadSimulators.dispatchGroupLoadResource(id:)` for id 0..<5.
+Use `SimulatedNetworkService.fetchResourceSync(id:)` for id 0..<5.
 
 ---
 

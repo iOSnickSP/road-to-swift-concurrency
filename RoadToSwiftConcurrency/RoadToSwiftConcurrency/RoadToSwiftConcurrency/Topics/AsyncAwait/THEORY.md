@@ -104,7 +104,7 @@ func loadData() async -> String {
 Реализуй демо: **загрузка данных** через async/await.
 
 **Базовое:**
-- `private func loadData() async -> String { await LoadSimulators.asyncSimulateLoad(delay: 2) }`
+- `private func loadData() async -> String { await SimulatedNetworkService.fetchText(delay: 2) }`
 - Кнопка «Load» — обработчик синхронный (`@objc`), поэтому оберни вызов в `Task { }`. Внутри: `let result = await loadData()`, затем обнови UI.
 - Индикатор загрузки: показывай при нажатии, скрывай после завершения. Кнопку отключай на время загрузки.
 
@@ -117,7 +117,7 @@ func loadData() async -> String {
 **Implement demo: data loading via async/await.**
 
 **Basics:**
-- `private func loadData() async -> String { await LoadSimulators.asyncSimulateLoad(delay: 2) }`
+- `private func loadData() async -> String { await SimulatedNetworkService.fetchText(delay: 2) }`
 - Button «Load» — handler is sync (`@objc`), so wrap the call in `Task { }`. Inside: `let result = await loadData()`, then update UI.
 - Loading indicator: show on tap, hide when done. Disable button during load.
 

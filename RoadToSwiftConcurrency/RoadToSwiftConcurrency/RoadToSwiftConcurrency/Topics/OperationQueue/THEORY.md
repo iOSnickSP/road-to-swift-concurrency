@@ -52,9 +52,9 @@ Dependencies are set before adding to queue. `addDependency` creates order A →
 
 ## Задача / Task
 
-Реализуй демо: **3 операции с зависимостями** (A → B → C). Каждая симулирует загрузку 1 сек (`delay: 1`). ProgressView (1/3, 2/3, 3/3). Когда все завершатся — покажи результат (Resource 0, Resource 1, Resource 2). Кнопка «Load». Используй `LoadSimulators.dispatchGroupLoadResource(id:delay:)` для id 0, 1, 2.
+Реализуй демо: **3 операции с зависимостями** (A → B → C). Каждая симулирует загрузку 1 сек (`delay: 1`). ProgressView (1/3, 2/3, 3/3). Когда все завершатся — покажи результат (Resource 0, Resource 1, Resource 2). Кнопка «Load». Используй `SimulatedNetworkService.fetchResourceSync(id:delay:)` для id 0, 1, 2.
 
-Implement demo: **3 operations with dependencies** (A → B → C). Each simulates 1 sec load (`delay: 1`). ProgressView (1/3, 2/3, 3/3). When all complete — show result (Resource 0, Resource 1, Resource 2). Button «Load». Use `LoadSimulators.dispatchGroupLoadResource(id:delay:)` for id 0, 1, 2.
+Implement demo: **3 operations with dependencies** (A → B → C). Each simulates 1 sec load (`delay: 1`). ProgressView (1/3, 2/3, 3/3). When all complete — show result (Resource 0, Resource 1, Resource 2). Button «Load». Use `SimulatedNetworkService.fetchResourceSync(id:delay:)` for id 0, 1, 2.
 
 ---
 

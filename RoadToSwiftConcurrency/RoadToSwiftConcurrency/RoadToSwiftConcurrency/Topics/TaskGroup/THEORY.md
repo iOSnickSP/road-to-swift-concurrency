@@ -69,11 +69,11 @@ let results = try await withThrowingTaskGroup(of: String.self) { group in
 
 **Сценарий:**
 - Кнопка «Load All» — запускает загрузку 3 ресурсов параллельно
-- Используй `withTaskGroup(of: String.self)` и `group.addTask { await LoadSimulators.taskGroupLoadResource(id: id) }`
+- Используй `withTaskGroup(of: String.self)` и `group.addTask { await SimulatedNetworkService.fetchResource(id: id) }`
 - Собери результаты через `for await result in group`
 - `ProgressView` — обновляй прогресс на main (1/3, 2/3, 3/3) по мере получения результатов
 - Когда все готовы — `statusLabel.text = "Done"`, `resultLabel.text` — объединённый результат
-- Вызов `LoadSimulators.taskGroupLoadResource(id:)` — async, симулирует задержку
+- Вызов `SimulatedNetworkService.fetchResource(id:)` — async, симулирует задержку
 
 **Implement demo: load 3 resources in parallel via TaskGroup.**
 

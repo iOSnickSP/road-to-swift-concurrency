@@ -53,7 +53,9 @@ When cancelling work items that haven't started, manually call `group.leave()` f
 
 Implement demo: load **3 resources sequentially** (serial queue). Load and Cancel buttons. On Load — start 3 work items. On Cancel — cancel remaining, `leave()` for cancelled. ProgressView, status, result. Finally — "Done" or "Cancelled".
 
-Используй `LoadSimulators.dispatchGroupLoadResource(id:)` для id 0, 1, 2.
+Используй `SimulatedNetworkService.fetchResourceSync(id:)` для id 0, 1, 2.
+
+Use `SimulatedNetworkService.fetchResourceSync(id:)` for id 0, 1, 2.
 
 ---
 

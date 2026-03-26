@@ -82,6 +82,6 @@ final class AsyncAwaitDemoViewController: UIViewController {
     /// Симулирует загрузку данных (2 сек). Вызывать с await.
     /// Simulates data load (2 sec). Call with await.
     private func loadData() async -> String {
-        await LoadSimulators.asyncSimulateLoad(delay: 2)
+        await SimulatedNetworkService.fetchText(delay: 2)
     }
 }

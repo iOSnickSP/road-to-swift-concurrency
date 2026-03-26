@@ -101,7 +101,7 @@ final class ConcurrentPerformDemoViewController: UIViewController {
         // TASK: DispatchQueue.global().async {
         //   var results = [String](repeating: "", count: totalItems)
         //   DispatchQueue.concurrentPerform(iterations: totalItems) { index in
-        //     results[index] = LoadSimulators.dispatchGroupLoadResource(id: index, delay: 0.5)
+        //     results[index] = SimulatedNetworkService.fetchResourceSync(id: index, delay: 0.5)
         //   }
         //   DispatchQueue.main.async { progress = 1, status, result, enable button }
         // }

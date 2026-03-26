@@ -70,7 +70,7 @@ let (x, y) = try await (a, b)
 **Сценарий:**
 - Кнопка «Load All» (`asyncLet.loadAll`), статус (`asyncLet.status`), результат (`asyncLet.result`), прогресс (`ProgressView`).
 - При нажатии: `Loading...`, сброс прогресса, пустой результат.
-- Реализуй **три** `async let` для `LoadSimulators.taskGroupLoadResource(id:)` с `id` **0, 1, 2** (как в теме TaskGroup).
+- Реализуй **три** `async let` для `SimulatedNetworkService.fetchResource(id:)` с `id` **0, 1, 2** (как в теме TaskGroup).
 - Дождись всех значений одним `await` (удобно через кортеж: `await (r0, r1, r2)`).
 - Затем: `progressView` = 1.0, `statusLabel` = `"Done"`, `resultLabel` = строка с тремя результатами (например через `joined(separator: ", ")`).
 - Оберни в `Task { }` с `@MainActor` контроллером — обновление UI на main.

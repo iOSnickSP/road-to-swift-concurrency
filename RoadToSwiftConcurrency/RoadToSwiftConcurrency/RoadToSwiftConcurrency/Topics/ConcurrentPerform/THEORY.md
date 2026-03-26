@@ -51,9 +51,9 @@ Each index is processed by exactly one iteration — safe to write to `results[i
 
 ## Задача / Task
 
-Реализуй демо: **параллельная обработка 5 элементов** через `concurrentPerform`. Кнопка «Process» — `global().async { concurrentPerform(iterations: 5) { index in ... } }`. Каждый индекс — `LoadSimulators.dispatchGroupLoadResource(id: index, delay: 0.5)`. Результаты в массив, затем main.async — ProgressView (5/5), result. Покажи сумму или список (Item 0, Item 1, ...).
+Реализуй демо: **параллельная обработка 5 элементов** через `concurrentPerform`. Кнопка «Process» — `global().async { concurrentPerform(iterations: 5) { index in ... } }`. Каждый индекс — `SimulatedNetworkService.fetchResourceSync(id: index, delay: 0.5)`. Результаты в массив, затем main.async — ProgressView (5/5), result. Покажи сумму или список (Item 0, Item 1, ...).
 
-Implement demo: **parallel processing of 5 items** via `concurrentPerform`. Button «Process» — `global().async { concurrentPerform(iterations: 5) { index in ... } }`. Each index — `LoadSimulators.dispatchGroupLoadResource(id: index, delay: 0.5)`. Collect results, then main.async — ProgressView (5/5), result. Show sum or list (Item 0, Item 1, ...).
+Implement demo: **parallel processing of 5 items** via `concurrentPerform`. Button «Process» — `global().async { concurrentPerform(iterations: 5) { index in ... } }`. Each index — `SimulatedNetworkService.fetchResourceSync(id: index, delay: 0.5)`. Collect results, then main.async — ProgressView (5/5), result. Show sum or list (Item 0, Item 1, ...).
 
 ---
 
