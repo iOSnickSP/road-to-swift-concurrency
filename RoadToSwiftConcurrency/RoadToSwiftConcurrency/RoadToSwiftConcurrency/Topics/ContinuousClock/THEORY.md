@@ -37,8 +37,6 @@ try await Task.sleep(for: .seconds(1), clock: ContinuousClock())
 
 - Не используй **`Date().addingTimeInterval`** как **единственный** способ «подождать в async» — для задержек в concurrency предпочтительнее **`Clock`** + **`Duration`**.
 - Для **UI-дедлайнов** по календарю по-прежнему **`Date`**, для **интервалов между шагами** — **`ContinuousClock`**.
-- Если один и тот же экран может **запускать новый `Task`**, пока старый ещё не завершился, храни **id операции** и перед записью в UI проверяй, что результат ещё **актуален** (как в демо с **`operationID`**).
-- Для отображения **`Duration`** в лейбле удобно взять **`components`** (секунды + аттосекунды) и вывести **секунды с дробью**; **`String(describing:)`** годится для отладки, но для пользователя читаемее **`"1.05 s"`**.
 
 ---
 
@@ -53,7 +51,7 @@ try await Task.sleep(for: .seconds(1), clock: ContinuousClock())
 
 Реализуй демо: **`Task`** на **MainActor**, цикл **5** шагов; на каждом шаге **`try Task.checkCancellation()`**, затем **`try await Task.sleep(for: .milliseconds(200), clock: ContinuousClock())`** (или один общий экземпляр `ContinuousClock`); обновление **`continuousClock.progress`** в формате **`0 / 5` … `5 / 5`**.
 
-После цикла вычисли **`Duration`** через **`start.duration(to: clock.now)`**, выведи в **`continuousClock.result`** строку **`Elapsed:`** и **читаемые секунды** (например из **`components`**). По желанию: **`operationID`** на каждый **Start**, **`guard`** перед финальным UI.
+После цикла вычисли **`Duration`** от **`clock.now`** в начале до **`clock.now`** в конце (через **`start.duration(to: clock.now)`**), выведи в **`continuousClock.result`** строку с **`Elapsed:`** и представлением длительности (например **`String(describing:)`** или **`formatted`**).
 
 **UI:** `continuousClock.start`, `continuousClock.cancel`, `continuousClock.status`, `continuousClock.progress`, `continuousClock.result`.
 
