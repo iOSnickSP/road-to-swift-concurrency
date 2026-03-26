@@ -2,7 +2,7 @@
 //  MainActorDemoViewController.swift
 //  RoadToSwiftConcurrency
 //
-//  Демо / Demo: фоновый Task + MainActor.run для UI.
+//  Демо / Demo: Task.detached + hop на MainActor для UI (с защитой от устаревших задач).
 //
 
 import UIKit
@@ -10,7 +10,9 @@ import UIKit
 @MainActor
 final class MainActorDemoViewController: UIViewController {
 
-    private var workTask: Task<Void, Error>?
+    /// Инкремент на каждый Start: отменённые/старые задачи не затирают UI нового запуска.
+    private var operationID = 0
+    private var workTask: Task<Void, Never>?
 
     private let startButton: UIButton = {
         let button = UIButton(type: .system)
@@ -100,17 +102,37 @@ final class MainActorDemoViewController: UIViewController {
 
     @objc private func startTapped() {
         workTask?.cancel()
+        operationID += 1
+        let op = operationID
 
         statusLabel.text = "Running..."
         resultLabel.text = "—"
 
-        // TASK: Реализуй по Topics/MainActor/THEORY.md — фоновый Task (например Task.detached или Task(priority:)),
-        // try await Task.sleep(...), try Task.checkCancellation(), обновление UI только через await MainActor.run { … }
-        // (или эквивалент). Сохрани ссылку в workTask. Строки для UI-тестов: Done / Cancelled, OK / —.
+        workTask = Task.detached(priority: .userInitiated) { [weak self] in
+            guard let self else { return }
+            do {
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+                try Task.checkCancellation()
+                await self.applySuccessIfCurrent(operation: op)
+            } catch {
+                await self.applyCancelledIfCurrent(operation: op)
+            }
+        }
     }
 
     @objc private func cancelTapped() {
         workTask?.cancel()
-        // TASK: Кооперативная отмена; при отмене во время sleep — статус Cancelled (см. MainActorDemoUITests).
+    }
+
+    private func applySuccessIfCurrent(operation op: Int) {
+        guard op == operationID else { return }
+        statusLabel.text = "Done"
+        resultLabel.text = "OK"
+    }
+
+    private func applyCancelledIfCurrent(operation op: Int) {
+        guard op == operationID else { return }
+        statusLabel.text = "Cancelled"
+        resultLabel.text = "—"
     }
 }
