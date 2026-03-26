@@ -48,6 +48,7 @@
 				Topics/DispatchSource/THEORY.md,
 				Topics/DispatchWorkItem/THEORY.md,
 				Topics/GCD/THEORY.md,
+				Topics/MainActor/THEORY.md,
 				Topics/OperationQueue/THEORY.md,
 				Topics/Sendable/THEORY.md,
 				Topics/SerialExecutor/THEORY.md,

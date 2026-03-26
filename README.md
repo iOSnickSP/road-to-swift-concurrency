@@ -77,6 +77,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **`Task.yield`** — уступка планировщику в async-цикле / yielding to the scheduler in an async loop
 - **`Task.detached`** — задача вне иерархии родителя, отмена отдельно / task outside parent hierarchy, separate cancellation
 - **`TaskPriority`** — приоритет задач (`.high` / `.low` и др.) / task priorities (`.high` / `.low`, etc.)
+- **`MainActor`** — глобальный актор для UI, `MainActor.run` / global actor for UI, `MainActor.run`
 
 ---
 

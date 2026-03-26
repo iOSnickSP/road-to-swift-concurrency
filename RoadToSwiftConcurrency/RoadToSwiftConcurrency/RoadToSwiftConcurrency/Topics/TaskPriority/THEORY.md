@@ -29,7 +29,8 @@ Task.detached(priority: TaskPriority? = nil, operation: @Sendable () async -> Su
 
 ## Дальше / Next
 
-- Тема в проекте: **TaskGroup** — [`../TaskGroup/THEORY.md`](../TaskGroup/THEORY.md) (структурированный параллелизм)
+- Тема в проекте: **MainActor** — [`../MainActor/THEORY.md`](../MainActor/THEORY.md) (изоляция UI, глобальный актор)
+- **TaskGroup** — [`../TaskGroup/THEORY.md`](../TaskGroup/THEORY.md) (структурированный параллелизм)
 - `ContinuousClock` / замеры интервалов для профилирования
 
 ---
