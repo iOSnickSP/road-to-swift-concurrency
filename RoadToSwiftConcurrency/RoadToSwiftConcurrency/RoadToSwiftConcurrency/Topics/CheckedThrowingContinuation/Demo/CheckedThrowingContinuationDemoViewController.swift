@@ -93,8 +93,10 @@ final class CheckedThrowingContinuationDemoViewController: UIViewController {
         dismiss(animated: true)
     }
 
-    /// TASK: оберни LegacyResultLoader в withCheckedThrowingContinuation — один resume(returning:) или resume(throwing:).
-    /// TASK: wrap LegacyResultLoader in withCheckedThrowingContinuation — one resume(returning:) or resume(throwing:).
+    /// TASK: оберни LegacyResultLoader в withCheckedThrowingContinuation —
+    /// один resume(returning:) или resume(throwing:).
+    /// TASK: wrap LegacyResultLoader in withCheckedThrowingContinuation —
+    /// one resume(returning:) or resume(throwing:).
     private func fetchBridged(shouldFail: Bool) async throws -> String {
         ""
     }

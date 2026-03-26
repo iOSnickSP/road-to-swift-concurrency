@@ -47,6 +47,7 @@ From each `main` commit there is a branch with the **reference solution**. These
 | Sendable | `solution/sendable` |
 | @unchecked Sendable | `solution/unchecked-sendable` |
 | SerialExecutor | `solution/serial-executor` |
+| CheckedContinuation | `CheckedContinuation-Solution` |
 
 **Как использовать:** реши задачу сам → застрял или хочешь сверить подход → переключись на ветку решения.
 
@@ -79,6 +80,8 @@ From each `main` commit there is a branch with the **reference solution**. These
 - **`TaskPriority`** — приоритет задач (`.high` / `.low` и др.) / task priorities (`.high` / `.low`, etc.)
 - **`MainActor`** — глобальный актор для UI, `MainActor.run` / global actor for UI, `MainActor.run`
 - **`ContinuousClock`** — монотонное время и `Duration`, `Task.sleep(for:clock:)` / monotonic time, `Duration`, `Task.sleep(for:clock:)`
+- **`CheckedContinuation`** — колбэк → `async` через `withCheckedContinuation` / callback → `async` via `withCheckedContinuation`
+- **`CheckedThrowingContinuation`** — `Result` в колбэке → `async throws` через `withCheckedThrowingContinuation` / `Result` callback → `async throws` via `withCheckedThrowingContinuation`
 
 ---
 
