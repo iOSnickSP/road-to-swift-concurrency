@@ -2,7 +2,7 @@
 //  ContinuousClockDemoViewController.swift
 //  RoadToSwiftConcurrency
 //
-//  Демо / Demo: Task.sleep(for:clock:) + замер Duration на ContinuousClock.
+//  Демо / Demo: Task.sleep(for:clock:) + замер Duration.
 //
 
 import UIKit
@@ -11,6 +11,7 @@ import UIKit
 final class ContinuousClockDemoViewController: UIViewController {
 
     private var workTask: Task<Void, Never>?
+
     private let monoClock = ContinuousClock()
     private let totalSteps = 5
     private let stepDuration = Duration.milliseconds(200)
@@ -122,29 +123,15 @@ final class ContinuousClockDemoViewController: UIViewController {
         progressLabel.text = "0 / \(totalSteps)"
         resultLabel.text = "—"
 
-        workTask = Task { @MainActor in
-            await self.runSteps()
-        }
-    }
-
-    private func runSteps() async {
-        let start = monoClock.now
-        do {
-            for step in 1...totalSteps {
-                try Task.checkCancellation()
-                try await Task.sleep(for: stepDuration, clock: monoClock)
-                progressLabel.text = "\(step) / \(totalSteps)"
-            }
-            let elapsed = start.duration(to: monoClock.now)
-            resultLabel.text = "Elapsed: \(String(describing: elapsed))"
-            statusLabel.text = "Completed"
-        } catch {
-            statusLabel.text = "Cancelled"
-            resultLabel.text = "—"
-        }
+        // TASK: Реализуй по Topics/ContinuousClock/THEORY.md — Task { @MainActor in … }, цикл 1...totalSteps,
+        // try Task.checkCancellation(), try await Task.sleep(for: stepDuration, clock: monoClock),
+        // обновляй progressLabel "step / totalSteps". Замер: let t0 = monoClock.now в начале, после цикла
+        // elapsed = t0.duration(to: monoClock.now), resultLabel = "Elapsed: …", status Completed.
+        // Сохрани workTask. Отмена → catch или checkCancellation → status Cancelled, result —.
     }
 
     @objc private func cancelTapped() {
         workTask?.cancel()
+        // TASK: Отмена активного Task (см. ContinuousClockDemoUITests).
     }
 }
