@@ -89,6 +89,13 @@ queue.async {
 
 ---
 
+## Дальше / Next
+
+- **CheckedContinuation** — колбэки → `async` через `withCheckedContinuation` / [`../CheckedContinuation/THEORY.md`](../CheckedContinuation/THEORY.md)
+- **CheckedThrowingContinuation** — `Result` / ошибки в колбэке → `async throws` / [`../CheckedThrowingContinuation/THEORY.md`](../CheckedThrowingContinuation/THEORY.md)
+
+---
+
 ## Проверка / Verification
 
 Запусти `SerialExecutorDemoUITests.testSerialExecutorIncrementUpdatesCount`.

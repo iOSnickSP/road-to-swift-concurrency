@@ -38,6 +38,8 @@
 				Topics/AsyncAwait/THEORY.md,
 				Topics/AsyncLet/THEORY.md,
 				Topics/AsyncSequence/THEORY.md,
+				Topics/CheckedContinuation/THEORY.md,
+				Topics/CheckedThrowingContinuation/THEORY.md,
 				Topics/TaskCancellation/THEORY.md,
 				Topics/TaskDetached/THEORY.md,
 				Topics/WithTaskCancellationHandler/THEORY.md,

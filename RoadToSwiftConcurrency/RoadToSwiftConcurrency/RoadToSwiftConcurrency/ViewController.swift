@@ -37,6 +37,8 @@ class ViewController: UIViewController {
     private let sendableDemoButton: UIButton = makeTopicButton(title: "Sendable Demo", id: "topics.sendableDemo")
     private let uncheckedSendableDemoButton: UIButton = makeTopicButton(title: "@unchecked Sendable Demo", id: "topics.uncheckedSendableDemo")
     private let serialExecutorDemoButton: UIButton = makeTopicButton(title: "SerialExecutor Demo", id: "topics.serialExecutorDemo")
+    private let checkedContinuationDemoButton: UIButton = makeTopicButton(title: "CheckedContinuation Demo", id: "topics.checkedContinuationDemo")
+    private let checkedThrowingContinuationDemoButton: UIButton = makeTopicButton(title: "CheckedThrowingContinuation Demo", id: "topics.checkedThrowingContinuationDemo")
 
     private lazy var scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -75,8 +77,8 @@ class ViewController: UIViewController {
         let modernLabel = makeSectionLabel("Modern Concurrency")
         let modernButtons: [UIButton] = [
             asyncAwaitButton, taskGroupDemoButton, asyncLetDemoButton, asyncSequenceDemoButton,
-            taskCancellationDemoButton, withTaskCancellationHandlerDemoButton, taskYieldDemoButton, taskDetachedDemoButton, taskPriorityDemoButton, mainActorDemoButton, continuousClockDemoButton, actorDemoButton, sendableDemoButton, uncheckedSendableDemoButton,
-            serialExecutorDemoButton
+            taskCancellationDemoButton, withTaskCancellationHandlerDemoButton, taskYieldDemoButton, taskDetachedDemoButton, taskPriorityDemoButton, mainActorDemoButton, continuousClockDemoButton, actorDemoButton,             sendableDemoButton, uncheckedSendableDemoButton,
+            serialExecutorDemoButton, checkedContinuationDemoButton, checkedThrowingContinuationDemoButton
         ]
         let modernStack = makeSectionStack(header: modernLabel, buttons: modernButtons)
 
@@ -146,6 +148,20 @@ class ViewController: UIViewController {
         sendableDemoButton.addTarget(self, action: #selector(openSendableDemo), for: .touchUpInside)
         uncheckedSendableDemoButton.addTarget(self, action: #selector(openUncheckedSendableDemo), for: .touchUpInside)
         serialExecutorDemoButton.addTarget(self, action: #selector(openSerialExecutorDemo), for: .touchUpInside)
+        checkedContinuationDemoButton.addTarget(self, action: #selector(openCheckedContinuationDemo), for: .touchUpInside)
+        checkedThrowingContinuationDemoButton.addTarget(self, action: #selector(openCheckedThrowingContinuationDemo), for: .touchUpInside)
+    }
+
+    @objc private func openCheckedThrowingContinuationDemo() {
+        let demo = CheckedThrowingContinuationDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
+    }
+
+    @objc private func openCheckedContinuationDemo() {
+        let demo = CheckedContinuationDemoViewController()
+        let nav = UINavigationController(rootViewController: demo)
+        present(nav, animated: true)
     }
 
     @objc private func openSerialExecutorDemo() {

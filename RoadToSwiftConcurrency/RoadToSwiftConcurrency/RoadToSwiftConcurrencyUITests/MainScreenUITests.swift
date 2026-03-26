@@ -41,6 +41,8 @@ final class MainScreenUITests: XCTestCase {
         XCTAssertTrue(app.buttons["topics.sendableDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.uncheckedSendableDemo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["topics.serialExecutorDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.checkedContinuationDemo"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["topics.checkedThrowingContinuationDemo"].waitForExistence(timeout: 2))
     }
 
     @MainActor
@@ -272,5 +274,25 @@ final class MainScreenUITests: XCTestCase {
         app.buttons["topics.serialExecutorDemo"].tap()
         XCTAssertTrue(app.buttons["serialExecutor.increment"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.staticTexts["serialExecutor.count"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToCheckedContinuationDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.checkedContinuationDemo"].tap()
+        XCTAssertTrue(app.buttons["checkedContinuation.fetch"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["checkedContinuation.status"].waitForExistence(timeout: 2))
+    }
+
+    @MainActor
+    func testCanNavigateToCheckedThrowingContinuationDemo() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["topics.checkedThrowingContinuationDemo"].tap()
+        XCTAssertTrue(app.buttons["checkedThrowingContinuation.fetch"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["checkedThrowingContinuation.status"].waitForExistence(timeout: 2))
     }
 }
