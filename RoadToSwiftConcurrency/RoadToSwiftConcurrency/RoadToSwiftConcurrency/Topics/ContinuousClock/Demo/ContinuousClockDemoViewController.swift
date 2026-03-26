@@ -2,7 +2,7 @@
 //  ContinuousClockDemoViewController.swift
 //  RoadToSwiftConcurrency
 //
-//  Демо / Demo: Task.sleep(for:clock:) + замер Duration; id операции против устаревших UI-обновлений.
+//  Демо / Demo: Task.sleep(for:clock:) + замер Duration.
 //
 
 import UIKit
@@ -11,7 +11,6 @@ import UIKit
 final class ContinuousClockDemoViewController: UIViewController {
 
     private var workTask: Task<Void, Never>?
-    private var operationID = 0
 
     private let monoClock = ContinuousClock()
     private let totalSteps = 5
@@ -119,55 +118,20 @@ final class ContinuousClockDemoViewController: UIViewController {
 
     @objc private func startTapped() {
         workTask?.cancel()
-        operationID += 1
-        let runID = operationID
 
         statusLabel.text = "Running..."
         progressLabel.text = "0 / \(totalSteps)"
         resultLabel.text = "—"
 
-        workTask = Task { @MainActor in
-            await self.runSteps(runID: runID)
-        }
-    }
-
-    private func runSteps(runID: Int) async {
-        let start = monoClock.now
-        do {
-            for step in 1...totalSteps {
-                try Task.checkCancellation()
-                try await Task.sleep(for: stepDuration, clock: monoClock)
-                guard runID == operationID else { return }
-                progressLabel.text = "\(step) / \(totalSteps)"
-            }
-            let elapsed = start.duration(to: monoClock.now)
-            applyCompletedIfCurrent(runID: runID, elapsed: elapsed)
-        } catch {
-            applyCancelledIfCurrent(runID: runID)
-        }
-    }
-
-    private func applyCompletedIfCurrent(runID: Int, elapsed: Duration) {
-        guard runID == operationID else { return }
-        statusLabel.text = "Completed"
-        progressLabel.text = "\(totalSteps) / \(totalSteps)"
-        resultLabel.text = "Elapsed: \(formatElapsedSeconds(elapsed))"
-    }
-
-    private func applyCancelledIfCurrent(runID: Int) {
-        guard runID == operationID else { return }
-        statusLabel.text = "Cancelled"
-        resultLabel.text = "—"
-    }
-
-    /// Секунды с дробной частью из `components` (attoseconds → доли секунды).
-    private func formatElapsedSeconds(_ elapsed: Duration) -> String {
-        let (seconds, attoseconds) = elapsed.components
-        let sec = Double(seconds) + Double(attoseconds) / 1e18
-        return String(format: "%.2f s", sec)
+        // TASK: Реализуй по Topics/ContinuousClock/THEORY.md — Task { @MainActor in … }, цикл 1...totalSteps,
+        // try Task.checkCancellation(), try await Task.sleep(for: stepDuration, clock: monoClock),
+        // обновляй progressLabel "step / totalSteps". Замер: let t0 = monoClock.now в начале, после цикла
+        // elapsed = t0.duration(to: monoClock.now), resultLabel = "Elapsed: …", status Completed.
+        // Сохрани workTask. Отмена → catch или checkCancellation → status Cancelled, result —.
     }
 
     @objc private func cancelTapped() {
         workTask?.cancel()
+        // TASK: Отмена активного Task (см. ContinuousClockDemoUITests).
     }
 }

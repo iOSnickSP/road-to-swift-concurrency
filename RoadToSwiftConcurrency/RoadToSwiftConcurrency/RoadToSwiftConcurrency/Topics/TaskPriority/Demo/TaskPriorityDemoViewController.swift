@@ -131,56 +131,14 @@ final class TaskPriorityDemoViewController: UIViewController {
         highProgressLabel.text = "High: 0/\(steps)"
         lowProgressLabel.text = "Low: 0/\(steps)"
 
-        highPriorityTask = Task(priority: .high) { [weak self] in
-            guard let self else { return }
-            try await self.runHighPriorityLoop()
-        }
-        lowPriorityTask = Task(priority: .low) { [weak self] in
-            guard let self else { return }
-            try await self.runLowPriorityLoop()
-        }
-
-        workTask = Task { @MainActor [weak self] in
-            guard let self else { return }
-            guard let highTask = self.highPriorityTask, let lowTask = self.lowPriorityTask else { return }
-            do {
-                async let highResult = try highTask.value
-                async let lowResult = try lowTask.value
-                _ = try await (highResult, lowResult)
-                self.statusLabel.text = "Completed"
-            } catch {
-                self.statusLabel.text = "Cancelled"
-                if self.highProgressLabel.text?.contains("Done") != true {
-                    self.highProgressLabel.text = "High: Cancelled"
-                }
-                if self.lowProgressLabel.text?.contains("Done") != true {
-                    self.lowProgressLabel.text = "Low: Cancelled"
-                }
-            }
-        }
-    }
-
-    private func runHighPriorityLoop() async throws {
-        for step in 1...steps {
-            try Task.checkCancellation()
-            try await Task.sleep(nanoseconds: stepSleepNs)
-            highProgressLabel.text = "High: \(step)/\(steps)"
-        }
-        highProgressLabel.text = "High: Done"
-    }
-
-    private func runLowPriorityLoop() async throws {
-        for step in 1...steps {
-            try Task.checkCancellation()
-            try await Task.sleep(nanoseconds: stepSleepNs)
-            lowProgressLabel.text = "Low: \(step)/\(steps)"
-        }
-        lowProgressLabel.text = "Low: Done"
+        // TASK: Topics/TaskPriority/THEORY.md — два Task(priority: .high / .low), циклы 1…steps,
+        // координирующий Task ждёт оба; Completed, High: Done, Low: Done; Cancel отменяет все три.
     }
 
     @objc private func cancelTapped() {
         workTask?.cancel()
         highPriorityTask?.cancel()
         lowPriorityTask?.cancel()
+        // TASK: надёжно отменить координирующий и оба дочерних Task
     }
 }

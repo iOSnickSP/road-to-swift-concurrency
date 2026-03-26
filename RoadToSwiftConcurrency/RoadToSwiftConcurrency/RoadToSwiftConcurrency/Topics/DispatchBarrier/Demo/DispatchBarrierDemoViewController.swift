@@ -96,10 +96,10 @@ final class DispatchBarrierDemoViewController: UIViewController {
 
     @objc private func incrementTapped() {
         statusLabel.text = "Incrementing..."
-        // TODO: queue.async(flags: .barrier) { _count += 1 }, main.async status = "Incremented"
+        // TASK: queue.async(flags: .barrier) { _count += 1 }, main.async status = "Incremented"
     }
 
     @objc private func readTapped() {
-        // TODO: queue.sync { count }, main.async valueLabel.text = "\(count)"
+        // TASK: queue.sync { count }, main.async valueLabel.text = "\(count)"
     }
 }

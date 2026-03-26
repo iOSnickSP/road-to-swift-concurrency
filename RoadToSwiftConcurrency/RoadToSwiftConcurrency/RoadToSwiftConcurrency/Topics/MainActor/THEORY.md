@@ -6,9 +6,9 @@
 
 **`MainActor`** is a **global actor** in Swift Concurrency: **UIKit** (and most SwiftUI) work must run on the **main thread**. Types and methods are marked **`@MainActor`** so the compiler blocks UI access from arbitrary threads.
 
-Из **фонового** `Task` (или `Task.detached`) обновляй UI через **`await MainActor.run { … }`**, **`await` на `@MainActor`-метод** или **`Task { @MainActor in … }`**. Если запускаешь несколько задач подряд, храни **идентификатор операции** и перед записью в UI проверяй, что результат ещё актуален.
+Из **фонового** `Task` обновляй UI через **`await MainActor.run { … }`** или **`Task { @MainActor in … }`**.
 
-From a **background** `Task` (or `Task.detached`), update the UI with **`await MainActor.run { … }`**, **`await` on an `@MainActor` method**, or **`Task { @MainActor in … }`**. If you can start overlapping work, keep an **operation id** and guard UI updates so stale tasks cannot overwrite newer state.
+From a **background** `Task`, update the UI with **`await MainActor.run { … }`** or **`Task { @MainActor in … }`**.
 
 ---
 

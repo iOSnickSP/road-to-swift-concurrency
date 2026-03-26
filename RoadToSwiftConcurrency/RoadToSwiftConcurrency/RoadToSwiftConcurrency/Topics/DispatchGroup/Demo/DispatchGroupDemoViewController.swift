@@ -98,7 +98,7 @@ final class DispatchGroupDemoViewController: UIViewController {
         statusLabel.text = "Loading..."
         resultLabel.text = ""
 
-        // TODO: DispatchGroup + 3 parallel tasks (enter/leave, defer), progress on main, notify → result
+        // TASK: DispatchGroup + 3 parallel tasks (enter/leave, defer), progress on main, notify → result
     }
 
     /// Симулирует загрузку ресурса. Вызывать только из фонового потока.

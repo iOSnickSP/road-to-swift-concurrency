@@ -11,13 +11,13 @@ import UIKit
 /// Executor, диспатчащий job'ы на выделенную DispatchQueue.
 /// Dispatches jobs onto a dedicated DispatchQueue.
 ///
-/// TODO: Реализуй enqueue — UnownedJob(job), queue.async { unownedJob.runSynchronously(on: ...) }
+/// TASK: Реализуй enqueue — UnownedJob(job), queue.async { unownedJob.runSynchronously(on: ...) }
 /// Implement enqueue — see THEORY.md pattern.
 final class CustomQueueExecutor: SerialExecutor {
     private let queue = DispatchQueue(label: "com.demo.serial")
 
     func enqueue(_ job: consuming ExecutorJob) {
-        // TODO: полная реализация — иначе job не выполнится, тесты зависнут
+        // TASK: полная реализация — иначе job не выполнится, тесты зависнут
         // Full implementation — otherwise job never runs, tests hang
         _ = UnownedJob(job)
     }
@@ -28,7 +28,7 @@ final class CustomQueueExecutor: SerialExecutor {
 }
 
 /// Actor, привязанный к CustomQueueExecutor.
-/// TODO: Реализуй increment() — count += 1; return count
+/// TASK: Реализуй increment() — count += 1; return count
 actor QueueBoundCounter {
     private let executor = CustomQueueExecutor()
     private var count = 0
@@ -38,7 +38,7 @@ actor QueueBoundCounter {
     }
 
     func increment() async -> Int {
-        // TODO: count += 1; return count
+        // TASK: count += 1; return count
         return 0
     }
 }
@@ -84,10 +84,7 @@ final class SerialExecutorDemoViewController: UIViewController {
     }
 
     @objc private func incrementTapped() {
-        Task {
-            let n = await counter.increment()
-            countLabel.text = "\(n)"
-        }
+        // TASK: Task { let n = await counter.increment(); countLabel.text = "\(n)" }
     }
 
     private func setupUI() {

@@ -18,11 +18,11 @@ struct StepsAsyncSequence: AsyncSequence {
     }
 
     struct Iterator: AsyncIteratorProtocol {
-        // TODO: храни счётчик шага (0…3) и реализуй next() — см. THEORY.md
-        // TODO: hold step index (0…3) and implement next() — see THEORY.md
+        // TASK: храни счётчик шага (0…3) и реализуй next() — см. THEORY.md
+        // TASK: hold step index (0…3) and implement next() — see THEORY.md
 
         mutating func next() async -> String? {
-            return nil
+            nil
         }
     }
 }
@@ -118,15 +118,7 @@ final class AsyncSequenceDemoViewController: UIViewController {
         statusLabel.text = "Running..."
         resultLabel.text = ""
 
-        Task {
-            var parts: [String] = []
-            for await step in StepsAsyncSequence() {
-                parts.append(step)
-                progressView.setProgress(CGFloat(parts.count) / totalSteps, animated: true)
-            }
-            statusLabel.text = "Done"
-            resultLabel.text = parts.joined(separator: ", ")
-            startButton.isEnabled = true
-        }
+        // TASK: после реализации StepsAsyncSequence.Iterator — Task { for await step in StepsAsyncSequence() { … } },
+        // progressView, status "Done", result из шагов, startButton.isEnabled = true. См. Topics/AsyncSequence/THEORY.md
     }
 }

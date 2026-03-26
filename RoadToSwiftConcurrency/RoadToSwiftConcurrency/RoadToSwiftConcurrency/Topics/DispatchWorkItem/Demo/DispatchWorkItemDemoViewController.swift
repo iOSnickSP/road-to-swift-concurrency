@@ -117,11 +117,11 @@ final class DispatchWorkItemDemoViewController: UIViewController {
         statusLabel.text = "Loading..."
         resultLabel.text = ""
 
-        // TODO: Serial queue + 3 DispatchWorkItem, Group, leave() on cancel for remaining, notify → Done/Cancelled
+        // TASK: Serial queue + 3 DispatchWorkItem, Group, leave() on cancel for remaining, notify → Done/Cancelled
     }
 
     @objc private func cancelTapped() {
-        // TODO: cancel work items, leave() for cancelled
+        // TASK: cancel work items, leave() for cancelled
     }
 
     /// Симулирует загрузку ресурса. Вызывать только из фонового потока.

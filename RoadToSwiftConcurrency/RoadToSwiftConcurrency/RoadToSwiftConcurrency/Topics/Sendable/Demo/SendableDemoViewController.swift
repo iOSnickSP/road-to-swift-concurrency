@@ -14,7 +14,7 @@ struct RelayMessage {
     let id: UUID
     let text: String
     let createdAt: Date
-    let source: UIViewController  // НЕ Sendable — исправь: удали или замени на Sendable-тип
+    let source: UIViewController  // TASK: сделай весь тип Sendable (см. THEORY.md)
 }
 
 actor MessageRelay {

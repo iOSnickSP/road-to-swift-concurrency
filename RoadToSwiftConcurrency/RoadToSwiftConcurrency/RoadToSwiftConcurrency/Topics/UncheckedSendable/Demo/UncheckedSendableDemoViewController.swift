@@ -8,8 +8,8 @@
 
 import UIKit
 
-/// TODO: Добавь : @unchecked Sendable — lock защищает доступ, класс потокобезопасен.
-/// Add : @unchecked Sendable — lock protects access, class is thread-safe.
+/// TASK: сделай ThreadSafeBox совместимым с проверками Sendable (см. THEORY.md).
+/// TASK: make ThreadSafeBox satisfy Sendable checking (see THEORY.md).
 final class ThreadSafeBox<T> {
     private let lock = NSLock()
     private var _value: T?
@@ -85,17 +85,11 @@ final class UncheckedSendableDemoViewController: UIViewController {
     }
 
     @objc private func storeTapped() {
-        let text = textField.text ?? ""
-        Task {
-            box.set(text)
-        }
+        // TASK: фоновый доступ к box.set (см. THEORY) после того, как ThreadSafeBox станет Sendable
     }
 
     @objc private func retrieveTapped() {
-        Task {
-            let value = box.get()
-            resultLabel.text = value ?? "(empty)"
-        }
+        // TASK: box.get и обновление resultLabel на main
     }
 
     private func setupUI() {

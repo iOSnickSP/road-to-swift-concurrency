@@ -101,11 +101,11 @@ final class TaskCancellationDemoViewController: UIViewController {
     }
 
     @objc private func startTapped() {
-        // TODO: workTask?.cancel(); status = Running…; progress 0/10
-        // TODO: workTask = Task { do { цикл 1…10, try Task.checkCancellation(), sleep 0.25s, обновить progress на MainActor } catch { отмена → Cancelled } успех → Completed }
+        // TASK: workTask?.cancel(); status = Running…; progress 0/10
+        // TASK: workTask = Task { do { цикл 1…10, try Task.checkCancellation(), sleep 0.25s, обновить progress на MainActor } catch { отмена → Cancelled } успех → Completed }
     }
 
     @objc private func cancelTapped() {
-        // TODO: workTask?.cancel()
+        // TASK: workTask?.cancel()
     }
 }

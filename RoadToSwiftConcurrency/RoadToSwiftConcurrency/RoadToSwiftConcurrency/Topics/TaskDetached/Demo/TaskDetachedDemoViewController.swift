@@ -124,46 +124,17 @@ final class TaskDetachedDemoViewController: UIViewController {
         parentStatusLabel.text = "Parent: Running"
         detachedProgressLabel.text = "Detached: 0/\(detachedSteps)"
 
-        let detachedTotal = detachedSteps
-        detachedTask = Task.detached { [weak self] in
-            do {
-                for step in 1...detachedTotal {
-                    try Task.checkCancellation()
-                    try await Task.sleep(nanoseconds: 100_000_000)
-                    await MainActor.run { [weak self] in
-                        self?.detachedProgressLabel.text = "Detached: \(step)/\(detachedTotal)"
-                    }
-                }
-                await MainActor.run { [weak self] in
-                    self?.detachedProgressLabel.text = "Detached: Done"
-                }
-            } catch {
-                await MainActor.run { [weak self] in
-                    self?.detachedProgressLabel.text = "Detached: Cancelled"
-                }
-            }
-        }
-
-        parentTask = Task { @MainActor [weak self] in
-            guard let self else { return }
-            do {
-                for step in 1...self.parentSteps {
-                    try Task.checkCancellation()
-                    try await Task.sleep(nanoseconds: 120_000_000)
-                    self.parentStatusLabel.text = "Parent: \(step)/\(self.parentSteps)"
-                }
-                self.parentStatusLabel.text = "Parent: Completed"
-            } catch {
-                self.parentStatusLabel.text = "Parent: Cancelled"
-            }
-        }
+        // TASK: Topics/TaskDetached/THEORY.md — parent Task на MainActor, Task.detached с циклом и MainActor.run для лейбла;
+        // отмена родителя не отменяет detached по умолчанию — см. тесты.
     }
 
     @objc private func cancelParentTapped() {
         parentTask?.cancel()
+        // TASK: только родитель
     }
 
     @objc private func cancelDetachedTapped() {
         detachedTask?.cancel()
+        // TASK: только detached
     }
 }

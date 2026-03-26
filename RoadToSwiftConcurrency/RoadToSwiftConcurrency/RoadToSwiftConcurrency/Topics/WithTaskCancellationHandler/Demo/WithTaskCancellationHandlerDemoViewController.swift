@@ -121,33 +121,11 @@ final class WithTaskCancellationHandlerDemoViewController: UIViewController {
         cleanupLabel.text = "Cleanup: —"
         progressLabel.text = "0 / \(totalSteps)"
 
-        workTask = Task { [weak self] in
-            await self?.runWithCancellationHandler()
-        }
-    }
-
-    private func runWithCancellationHandler() async {
-        do {
-            try await withTaskCancellationHandler {
-                for step in 1...totalSteps {
-                    try Task.checkCancellation()
-                    try await Task.sleep(nanoseconds: 250_000_000)
-                    await MainActor.run {
-                        self.progressLabel.text = "\(step) / \(self.totalSteps)"
-                    }
-                }
-            } onCancel: { [weak self] in
-                Task { @MainActor [weak self] in
-                    self?.cleanupLabel.text = "Cleanup: ran"
-                }
-            }
-            statusLabel.text = "Completed"
-        } catch {
-            statusLabel.text = "Cancelled"
-        }
+        // TASK: Topics/WithTaskCancellationHandler/THEORY.md — withTaskCancellationHandler { цикл + sleep } onCancel: { Cleanup: ran }
     }
 
     @objc private func cancelTapped() {
         workTask?.cancel()
+        // TASK: отмена workTask
     }
 }

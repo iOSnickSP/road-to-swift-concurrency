@@ -98,12 +98,12 @@ final class DispatchSourceDemoViewController: UIViewController {
 
     @objc private func startTapped() {
         statusLabel.text = "Running"
-        // TODO: cancel existing timer, reset _seconds, create DispatchSource.makeTimerSource(queue:),
+        // TASK: cancel existing timer, reset _seconds, create DispatchSource.makeTimerSource(queue:),
         // schedule(deadline: .now(), repeating: 1), setEventHandler { _seconds += 1; main.async update UI },
         // resume()
     }
 
     @objc private func stopTapped() {
-        // TODO: timer?.cancel(), timer = nil, status = "Stopped"
+        // TASK: timer?.cancel(), timer = nil, status = "Stopped"
     }
 }

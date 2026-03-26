@@ -104,26 +104,13 @@ final class MainActorDemoViewController: UIViewController {
         statusLabel.text = "Running..."
         resultLabel.text = "—"
 
-        // Не `Task { @MainActor in … }`: тело выполняется вне main; UI только через `MainActor.run`.
-        workTask = Task(priority: .userInitiated) { [weak self] in
-            guard let self else { return }
-            do {
-                try await Task.sleep(nanoseconds: 1_000_000_000)
-                try Task.checkCancellation()
-                await MainActor.run {
-                    self.statusLabel.text = "Done"
-                    self.resultLabel.text = "OK"
-                }
-            } catch {
-                await MainActor.run {
-                    self.statusLabel.text = "Cancelled"
-                    self.resultLabel.text = "—"
-                }
-            }
-        }
+        // TASK: Реализуй по Topics/MainActor/THEORY.md — фоновый Task (например Task.detached или Task(priority:)),
+        // try await Task.sleep(...), try Task.checkCancellation(), обновление UI только через await MainActor.run { … }
+        // (или эквивалент). Сохрани ссылку в workTask. Строки для UI-тестов: Done / Cancelled, OK / —.
     }
 
     @objc private func cancelTapped() {
         workTask?.cancel()
+        // TASK: Кооперативная отмена; при отмене во время sleep — статус Cancelled (см. MainActorDemoUITests).
     }
 }

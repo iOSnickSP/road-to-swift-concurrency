@@ -134,7 +134,7 @@ final class DispatchSemaphoreDemoViewController: UIViewController {
         resultLabel.text = ""
         resourceRows.forEach { $0.setState(.waiting) }
 
-        // TODO: Semaphore(maxConcurrent) + Group, 5 tasks, wait/signal in defer, row states + progress on main, notify → result
+        // TASK: Semaphore(maxConcurrent) + Group, 5 tasks, wait/signal in defer, row states + progress on main, notify → result
     }
 
     /// Симулирует загрузку ресурса. Вызывать только из фонового потока.

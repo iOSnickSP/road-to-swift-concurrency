@@ -8,15 +8,14 @@
 
 import UIKit
 
-/// TODO: Добавь try? await Task.sleep(nanoseconds: 300_000_000) в начало increment().
+/// TASK: Добавь try? await Task.sleep(nanoseconds: 300_000_000) в начало increment().
 /// Add try? await Task.sleep(nanoseconds: 300_000_000) at the start of increment().
 actor CounterActor {
     private var count = 0
 
     func increment() async -> Int {
-        // TODO: try? await Task.sleep(nanoseconds: 300_000_000)
-        count += 1
-        return count
+        // TASK: try? await Task.sleep(nanoseconds: 300_000_000), затем count += 1; return count
+        return 0
     }
 }
 
@@ -58,14 +57,14 @@ final class ActorDemoViewController: UIViewController {
         setupActions()
     }
 
-    // TODO: override func viewWillDisappear(_ animated: Bool) { super.viewWillDisappear(animated); incrementTask?.cancel() }
+    // TASK: override func viewWillDisappear(_ animated: Bool) { super.viewWillDisappear(animated); incrementTask?.cancel() }
 
     @objc private func dismissTapped() {
         dismiss(animated: true)
     }
 
     @objc private func addTapped() {
-        // TODO: incrementTask = Task { let n = await counter.increment(); guard !Task.isCancelled else { return }; countLabel.text = "\(n)" }
+        // TASK: incrementTask = Task { let n = await counter.increment(); guard !Task.isCancelled else { return }; countLabel.text = "\(n)" }
     }
 
     private func setupUI() {

@@ -100,7 +100,7 @@ final class OperationQueueDemoViewController: UIViewController {
         statusLabel.text = "Loading..."
         resultLabel.text = ""
 
-        // TODO: BlockOperation для id 0,1,2 с LoadSimulators.dispatchGroupLoadResource(id:delay: 1).
+        // TASK: BlockOperation для id 0,1,2 с LoadSimulators.dispatchGroupLoadResource(id:delay: 1).
         // addDependency: opB.addDependency(opA), opC.addDependency(opB).
         // completionBlock каждого — main.async { progress, results }. opC — финальный result.
         // queue.addOperations([opA, opB, opC], waitUntilFinished: false)

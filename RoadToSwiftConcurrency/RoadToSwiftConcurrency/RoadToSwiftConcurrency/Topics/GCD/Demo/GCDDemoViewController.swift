@@ -84,7 +84,7 @@ final class GCDDemoViewController: UIViewController {
     // MARK: - Actions
 
     @objc private func loadButtonTapped() {
-        // TODO: global.async → simulateLoad() → main.async → update UI
+        // TASK: global.async → simulateLoad() → main.async → update UI
     }
 
     /// Симулирует загрузку данных (2 секунды). Вызывать только из фонового потока.

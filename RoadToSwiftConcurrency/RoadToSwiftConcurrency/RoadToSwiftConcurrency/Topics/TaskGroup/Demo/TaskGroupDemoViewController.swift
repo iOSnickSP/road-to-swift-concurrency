@@ -100,13 +100,7 @@ final class TaskGroupDemoViewController: UIViewController {
         resultLabel.text = ""
 
         Task {
-            // TODO: let results = await withTaskGroup(of: String.self) { group in
-            //   for id in 0..<totalTasks { group.addTask { await LoadSimulators.taskGroupLoadResource(id: id) } }
-            //   var collected: [String] = []
-            //   for await result in group { collected.append(result); await MainActor.run { progressView.setProgress(...) } }
-            //   return collected
-            // }
-            // statusLabel.text = "Done"; resultLabel.text = results.joined(separator: ", ")
+            // TASK: см. Topics/TaskGroup/THEORY.md — withTaskGroup, параллельная загрузка totalTasks ресурсов, прогресс, итог
             loadButton.isEnabled = true
         }
     }

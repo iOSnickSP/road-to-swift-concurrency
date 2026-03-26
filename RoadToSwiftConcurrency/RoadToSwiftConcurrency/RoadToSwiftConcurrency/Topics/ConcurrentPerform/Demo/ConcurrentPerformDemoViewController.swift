@@ -98,7 +98,7 @@ final class ConcurrentPerformDemoViewController: UIViewController {
         statusLabel.text = "Processing..."
         resultLabel.text = ""
 
-        // TODO: DispatchQueue.global().async {
+        // TASK: DispatchQueue.global().async {
         //   var results = [String](repeating: "", count: totalItems)
         //   DispatchQueue.concurrentPerform(iterations: totalItems) { index in
         //     results[index] = LoadSimulators.dispatchGroupLoadResource(id: index, delay: 0.5)
